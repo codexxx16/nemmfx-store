@@ -8,6 +8,9 @@ import { useCurrency } from '@/contexts/CurrencyContext';
 import { formatLocalPrice } from '@/lib/currency';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft, faCheckCircle, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { faPaypal, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 
 export default function PayPalCheckoutPage() {
   const { items, subtotal, vat, total } = useCart();
@@ -37,9 +40,7 @@ export default function PayPalCheckoutPage() {
           className="max-w-md mx-auto text-center space-y-6 p-8"
         >
           <div className="w-20 h-20 mx-auto bg-success/10 rounded-full flex items-center justify-center">
-            <svg className="w-10 h-10 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
+            <FontAwesomeIcon icon={faCheckCircle} className="text-4xl text-success" />
           </div>
           <h1 className="font-display text-2xl font-bold text-white">Payment Confirmed!</h1>
           <p className="text-muted leading-relaxed">
@@ -56,6 +57,7 @@ export default function PayPalCheckoutPage() {
               rel="noopener noreferrer"
               className="px-6 py-2 border border-success text-success rounded-lg font-medium text-sm hover:bg-success/10 transition-colors"
             >
+              <FontAwesomeIcon icon={faWhatsapp} className="mr-2" />
               Contact Us on WhatsApp
             </a>
           </div>
@@ -106,9 +108,7 @@ export default function PayPalCheckoutPage() {
       <div className="min-h-screen py-12">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link href="/checkout" className="inline-flex items-center gap-2 text-muted hover:text-white transition-colors mb-8">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
+            <FontAwesomeIcon icon={faChevronLeft} className="w-3 h-3" />
             Back to payment methods
           </Link>
 
@@ -139,7 +139,8 @@ export default function PayPalCheckoutPage() {
             {/* PayPal Button */}
             <div className="space-y-4">
               {status === 'error' && (
-                <div className="p-4 bg-danger/10 border border-danger/20 rounded-lg text-sm text-danger">
+                <div className="p-4 bg-danger/10 border border-danger/20 rounded-lg text-sm text-danger flex items-center gap-3">
+                  <FontAwesomeIcon icon={faExclamationTriangle} />
                   {errorMessage}
                 </div>
               )}
@@ -147,15 +148,13 @@ export default function PayPalCheckoutPage() {
               <button
                 onClick={handlePayPalPayment}
                 disabled={status === 'processing'}
-                className="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+                className="w-full py-4 bg-[#0070ba] hover:bg-[#005ea6] text-white font-bold rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
               >
                 {status === 'processing' ? (
                   <LoadingSpinner size="sm" />
                 ) : (
                   <>
-                    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.506l-.24 1.516a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788l.038-.2.73-4.627.047-.256a.96.96 0 0 1 .946-.806h.596c3.86 0 6.881-1.567 7.764-6.101.37-1.905.18-3.497-.769-4.613a3.834 3.834 0 0 0-.245-.233z"/>
-                    </svg>
+                    <FontAwesomeIcon icon={faPaypal} className="text-xl" />
                     Pay with PayPal — ${total.toFixed(2)} USD
                   </>
                 )}

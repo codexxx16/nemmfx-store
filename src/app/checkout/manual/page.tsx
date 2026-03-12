@@ -10,6 +10,18 @@ import { formatLocalPrice } from '@/lib/currency';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import toast from 'react-hot-toast';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  faChevronLeft, 
+  faCopy, 
+  faEye, 
+  faUpload, 
+  faCheckCircle,
+  faBuildingColumns,
+  faMobileScreenButton,
+  faMobileButton
+} from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 
 function ManualPaymentContent() {
   const searchParams = useSearchParams();
@@ -81,9 +93,33 @@ function ManualPaymentContent() {
         throw new Error('Upload failed');
       }
 
+      // Prepare WhatsApp Message
+      const methodLabels: Record<string, string> = {
+        eft: 'EFT (Access Bank)',
+        mukuru: 'Mukuru',
+        ecocash: 'EcoCash',
+        mobile_money: 'Zimbabwe Mobile Money',
+      };
+
+      const itemsList = items.map(i => `- ${i.product.name} (x${i.quantity})`).join('\n');
+      const whatsappText = `*New Order: ${orderId}*\n\n` +
+        `*Items:*\n${itemsList}\n\n` +
+        `*Payment Method:* ${methodLabels[method] || method}\n` +
+        `*Amount Paid:* $${total.toFixed(2)} USD\n` +
+        `*Local Currency:* ${formatLocalPrice(total, currency)}\n\n` +
+        `I have uploaded my proof of payment. Please verify and send my .ex5 files.`;
+
+      const whatsappUrl = `https://wa.me/27747694008?text=${encodeURIComponent(whatsappText)}`;
+
       setUploaded(true);
       clearCart();
-      toast.success('Proof of payment submitted successfully!');
+      toast.success('Proof of payment submitted! Redirecting to WhatsApp...');
+      
+      // Small delay before redirect
+      setTimeout(() => {
+        window.open(whatsappUrl, '_blank');
+      }, 2000);
+
     } catch {
       toast.error('Upload failed. Please try again or contact support.');
     } finally {
@@ -109,9 +145,7 @@ function ManualPaymentContent() {
       <div className="min-h-screen flex items-center justify-center">
         <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="max-w-md mx-auto text-center space-y-6 p-8">
           <div className="w-20 h-20 mx-auto bg-success/10 rounded-full flex items-center justify-center">
-            <svg className="w-10 h-10 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
+            <FontAwesomeIcon icon={faCheckCircle} className="text-4xl text-success" />
           </div>
           <h1 className="font-display text-2xl font-bold text-white">Proof of Payment Submitted!</h1>
           <p className="text-muted leading-relaxed">
@@ -123,6 +157,7 @@ function ManualPaymentContent() {
               View My Orders
             </Link>
             <a href="https://wa.me/27747694008" target="_blank" rel="noopener noreferrer" className="px-6 py-2 border border-success text-success rounded-lg font-medium text-sm hover:bg-success/10 transition-colors">
+              <FontAwesomeIcon icon={faWhatsapp} className="mr-2" />
               Contact Us on WhatsApp
             </a>
           </div>
@@ -138,20 +173,30 @@ function ManualPaymentContent() {
     mobile_money: 'Zimbabwe Mobile Money',
   };
 
+  const methodIcons: Record<string, any> = {
+    eft: faBuildingColumns,
+    mukuru: faMobileScreenButton,
+    ecocash: faMobileButton,
+    mobile_money: faMobileScreenButton,
+  };
+
   return (
     <div className="min-h-screen py-12">
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
         <Link href="/checkout" className="inline-flex items-center gap-2 text-muted hover:text-white transition-colors mb-8">
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
+          <FontAwesomeIcon icon={faChevronLeft} className="w-3 h-3" />
           Back to payment methods
         </Link>
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <h1 className="font-display text-3xl font-bold text-white mb-2">
-            {methodLabels[method] || 'Manual Payment'}
-          </h1>
+          <div className="flex items-center gap-4 mb-2">
+            <div className="w-10 h-10 flex items-center justify-center bg-surface border border-border rounded-lg text-accent">
+              <FontAwesomeIcon icon={methodIcons[method] || faBuildingColumns} />
+            </div>
+            <h1 className="font-display text-3xl font-bold text-white">
+              {methodLabels[method] || 'Manual Payment'}
+            </h1>
+          </div>
           <p className="text-muted mb-8">
             Follow the instructions below to complete your payment.
           </p>
@@ -186,9 +231,7 @@ function ManualPaymentContent() {
                     <span className="text-muted">Account Number</span>
                     <button onClick={() => copyToClipboard('51643775328')} className="text-white font-medium hover:text-accent transition-colors flex items-center gap-2">
                       51643775328
-                      <svg className="w-4 h-4 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                      </svg>
+                      <FontAwesomeIcon icon={faCopy} className="w-3 h-3 text-muted" />
                     </button>
                   </div>
                   <div className="flex justify-between py-2 border-b border-border">
@@ -199,9 +242,7 @@ function ManualPaymentContent() {
                     <span className="text-muted">Reference</span>
                     <button onClick={() => copyToClipboard(`NemmFX-${orderId}`)} className="text-accent font-medium hover:text-accent/80 transition-colors flex items-center gap-2">
                       NemmFX-{orderId}
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                      </svg>
+                      <FontAwesomeIcon icon={faCopy} className="w-3 h-3" />
                     </button>
                   </div>
                 </div>
@@ -227,8 +268,9 @@ function ManualPaymentContent() {
                       {!ecoCashRevealed ? (
                         <button
                           onClick={() => setEcoCashRevealed(true)}
-                          className="px-3 py-1 bg-accent/10 text-accent border border-accent/20 rounded text-xs font-medium hover:bg-accent/20 transition-colors"
+                          className="px-3 py-1 bg-accent/10 text-accent border border-accent/20 rounded text-xs font-medium hover:bg-accent/20 transition-colors flex items-center gap-2"
                         >
+                          <FontAwesomeIcon icon={faEye} className="w-3 h-3" />
                           Reveal Details
                         </button>
                       ) : (
@@ -236,9 +278,7 @@ function ManualPaymentContent() {
                           onClick={() => copyToClipboard('0779570306')}
                           className="p-1 text-muted hover:text-accent transition-colors"
                         >
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                          </svg>
+                          <FontAwesomeIcon icon={faCopy} className="w-4 h-4" />
                         </button>
                       )}
                     </div>
@@ -262,9 +302,7 @@ function ManualPaymentContent() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-4 py-2 bg-success/10 text-success border border-success/20 rounded-lg text-sm font-medium hover:bg-success/20 transition-colors"
                 >
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-                  </svg>
+                  <FontAwesomeIcon icon={faWhatsapp} />
                   WhatsApp: +27 74 769 4008
                 </a>
               </div>
@@ -291,6 +329,7 @@ function ManualPaymentContent() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-4 py-2 bg-success/10 text-success border border-success/20 rounded-lg text-sm font-medium hover:bg-success/20 transition-colors"
                 >
+                  <FontAwesomeIcon icon={faWhatsapp} />
                   Contact Support
                 </a>
               </div>
@@ -314,9 +353,7 @@ function ManualPaymentContent() {
                 id="pop-upload"
               />
               <label htmlFor="pop-upload" className="cursor-pointer space-y-2">
-                <svg className="w-10 h-10 mx-auto text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                </svg>
+                <FontAwesomeIcon icon={faUpload} className="w-10 h-10 mx-auto text-muted" />
                 <p className="text-sm text-muted">
                   {selectedFile ? (
                     <span className="text-accent">{selectedFile.name}</span>

@@ -8,6 +8,8 @@ import { Product } from '@/lib/types';
 import { useCart } from '@/contexts/CartContext';
 import { useCurrency } from '@/contexts/CurrencyContext';
 import { formatPrice } from '@/lib/currency';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDownload, faCartPlus } from '@fortawesome/free-solid-svg-icons';
 
 interface ProductCardProps {
   product: Product;
@@ -88,9 +90,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               onClick={handleFreeClick}
               className="w-full py-2.5 bg-success/10 text-success border border-success/20 rounded-lg font-medium text-sm hover:bg-success/20 transition-colors flex items-center justify-center gap-2"
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-              </svg>
+              <FontAwesomeIcon icon={faDownload} className="w-3 h-3" />
               Get Free Bot
             </button>
             <p className="text-xs text-muted text-center mt-2">
@@ -100,8 +100,9 @@ export default function ProductCard({ product }: ProductCardProps) {
         ) : (
           <button
             onClick={() => addToCart(product)}
-            className="w-full py-2.5 bg-accent text-background rounded-lg font-bold text-sm hover:bg-accent/90 transition-colors"
+            className="w-full py-2.5 bg-accent text-background rounded-lg font-bold text-sm hover:bg-accent/90 transition-colors flex items-center justify-center gap-2"
           >
+            <FontAwesomeIcon icon={faCartPlus} className="w-3 h-3" />
             Add to Cart
           </button>
         )}

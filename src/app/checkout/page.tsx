@@ -7,49 +7,59 @@ import { motion } from 'framer-motion';
 import { useCart } from '@/contexts/CartContext';
 import { useCurrency } from '@/contexts/CurrencyContext';
 import { formatLocalPrice } from '@/lib/currency';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  faCreditCard, 
+  faBuildingColumns, 
+  faMobileScreenButton, 
+  faMobileButton,
+  faCommentDots,
+  faChevronRight
+} from '@fortawesome/free-solid-svg-icons';
+import { faPaypal, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 
 const paymentMethods = [
   {
     id: 'paypal',
     name: 'PayPal',
-    icon: '💳',
+    icon: <FontAwesomeIcon icon={faPaypal} className="text-[#003087]" />,
     description: 'Instant, automated delivery',
     href: '/checkout/paypal',
   },
   {
     id: 'eft',
     name: 'EFT (Access Bank)',
-    icon: '🏦',
-    description: 'Instant, automated delivery',
+    icon: <FontAwesomeIcon icon={faBuildingColumns} className="text-accent" />,
+    description: 'Manual verification',
     href: '/checkout/manual?method=eft',
   },
   {
     id: 'mukuru',
     name: 'Mukuru',
-    icon: '📱',
-    description: 'Instant, automated delivery',
+    icon: <FontAwesomeIcon icon={faMobileScreenButton} className="text-orange-500" />,
+    description: 'Manual verification',
     href: '/checkout/manual?method=mukuru',
   },
   {
     id: 'ecocash',
     name: 'EcoCash',
-    icon: '📱',
-    description: 'Instant, automated delivery',
+    icon: <FontAwesomeIcon icon={faMobileButton} className="text-blue-500" />,
+    description: 'Manual verification',
     href: '/checkout/manual?method=ecocash',
   },
   {
     id: 'mobile_money',
-    name: 'Zimbabwe Mobile Money (All networks)',
-    icon: '📲',
-    description: 'Instant, automated delivery',
+    name: 'Zimbabwe Mobile Money',
+    icon: <FontAwesomeIcon icon={faMobileScreenButton} className="text-accent" />,
+    description: 'All networks supported',
     href: '/checkout/manual?method=mobile_money',
   },
   {
     id: 'whatsapp',
     name: 'WhatsApp Payment',
-    icon: '💬',
+    icon: <FontAwesomeIcon icon={faWhatsapp} className="text-[#25D366]" />,
     description: 'Contact support',
-    href: 'https://chat.whatsapp.com/EoCJzxKYeQ7BQenB8cxEvH',
+    href: 'https://wa.me/27747694008',
     external: true,
   },
 ];
@@ -156,7 +166,9 @@ export default function CheckoutPage() {
                       {...extraProps}
                       className="flex items-center gap-4 p-4 bg-surface border border-border rounded-xl hover:border-accent/30 transition-all group"
                     >
-                      <span className="text-2xl">{method.icon}</span>
+                      <div className="w-10 h-10 flex items-center justify-center bg-background rounded-lg text-xl">
+                        {method.icon}
+                      </div>
                       <div className="flex-1">
                         <p className="text-sm font-medium text-white group-hover:text-accent transition-colors">
                           {method.name}
@@ -165,19 +177,10 @@ export default function CheckoutPage() {
                           {method.description}
                         </p>
                       </div>
-                      <svg
-                        className="w-5 h-5 text-muted group-hover:text-accent transition-colors"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 5l7 7-7 7"
-                        />
-                      </svg>
+                      <FontAwesomeIcon 
+                        icon={faChevronRight} 
+                        className="w-4 h-4 text-muted group-hover:text-accent transition-colors" 
+                      />
                     </Component>
                   );
                 })}

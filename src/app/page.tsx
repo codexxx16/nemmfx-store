@@ -6,6 +6,17 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import ProductCard from '@/components/ProductCard';
 import { products } from '@/lib/products';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  faBolt, 
+  faArrowRight, 
+  faExternalLinkAlt,
+  faChartLine,
+  faShieldHalved,
+  faClock,
+  faCheckCircle
+} from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 
 export default function Home() {
   return (
@@ -22,12 +33,12 @@ export default function Home() {
             className="space-y-8"
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent/10 border border-accent/20 rounded-full">
-              <span className="w-2 h-2 bg-accent rounded-full animate-pulse" />
-              <span className="text-xs font-medium text-accent">
+              <FontAwesomeIcon icon={faBolt} className="text-accent text-xs animate-pulse" />
+              <span className="text-xs font-medium text-accent uppercase tracking-wider">
                 Professional Trading Tools
               </span>
             </div>
-            <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight">
+            <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white">
               Trade Smarter with{' '}
               <span className="text-accent">NemmFX</span>
             </h1>
@@ -39,9 +50,10 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 href="/algovault"
-                className="px-8 py-3.5 bg-accent text-background font-bold rounded-lg hover:bg-accent/90 transition-colors text-sm"
+                className="px-8 py-3.5 bg-accent text-background font-bold rounded-lg hover:bg-accent/90 transition-colors text-sm flex items-center gap-2"
               >
                 Explore AlgoVault
+                <FontAwesomeIcon icon={faArrowRight} />
               </Link>
               <Link
                 href="/about"
@@ -60,16 +72,17 @@ export default function Home() {
             className="mt-20 grid grid-cols-2 sm:grid-cols-4 gap-8"
           >
             {[
-              { value: '14+', label: 'Pattern Recognition' },
-              { value: 'v1.2', label: 'Latest Version' },
-              { value: 'MT5', label: 'Platform Support' },
-              { value: '24/7', label: 'Automated Trading' },
+              { value: '14+', label: 'Pattern Recognition', icon: faChartLine },
+              { value: 'v1.2', label: 'Latest Version', icon: faShieldHalved },
+              { value: 'MT5', label: 'Platform Support', icon: faCheckCircle },
+              { value: '24/7', label: 'Automated Trading', icon: faClock },
             ].map((stat) => (
-              <div key={stat.label} className="text-center">
+              <div key={stat.label} className="text-center group">
+                <FontAwesomeIcon icon={stat.icon} className="text-accent/30 group-hover:text-accent transition-colors mb-2" />
                 <p className="font-display text-2xl sm:text-3xl font-bold text-accent">
                   {stat.value}
                 </p>
-                <p className="mt-1 text-xs text-muted">{stat.label}</p>
+                <p className="mt-1 text-xs text-muted uppercase tracking-wider">{stat.label}</p>
               </div>
             ))}
           </motion.div>
@@ -104,16 +117,14 @@ export default function Home() {
               className="inline-flex items-center gap-2 text-accent hover:text-accent/80 font-medium text-sm transition-colors"
             >
               View all products in AlgoVault
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
+              <FontAwesomeIcon icon={faArrowRight} />
             </Link>
           </div>
         </div>
       </section>
 
       {/* About Teaser */}
-      <section className="py-20 bg-surface/50">
+      <section className="py-20 bg-surface/50 border-y border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -142,9 +153,7 @@ export default function Home() {
                   className="inline-flex items-center gap-2 text-accent hover:text-accent/80 font-medium text-sm transition-colors"
                 >
                   Read our story
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
+                  <FontAwesomeIcon icon={faArrowRight} />
                 </Link>
                 <a
                   href="https://charless-dev.vercel.app"
@@ -153,9 +162,7 @@ export default function Home() {
                   className="inline-flex items-center gap-2 text-muted hover:text-white font-medium text-sm transition-colors"
                 >
                   Visit developer site
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
+                  <FontAwesomeIcon icon={faExternalLinkAlt} className="w-3 h-3" />
                 </a>
               </div>
             </motion.div>
@@ -198,16 +205,18 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 href="/algovault"
-                className="px-8 py-3.5 bg-accent text-background font-bold rounded-lg hover:bg-accent/90 transition-colors text-sm"
+                className="px-8 py-3.5 bg-accent text-background font-bold rounded-lg hover:bg-accent/90 transition-colors text-sm flex items-center gap-2"
               >
                 Browse AlgoVault
+                <FontAwesomeIcon icon={faArrowRight} />
               </Link>
               <a
                 href="https://wa.me/27747694008"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-8 py-3.5 border border-border text-white font-medium rounded-lg hover:border-success/50 hover:text-success transition-colors text-sm"
+                className="px-8 py-3.5 border border-border text-white font-medium rounded-lg hover:border-success/50 hover:text-success transition-colors text-sm flex items-center gap-2"
               >
+                <FontAwesomeIcon icon={faWhatsapp} />
                 Chat on WhatsApp
               </a>
             </div>

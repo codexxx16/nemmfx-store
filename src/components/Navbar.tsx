@@ -7,6 +7,15 @@ import { useSession, signIn, signOut } from 'next-auth/react';
 import { useCart } from '@/contexts/CartContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  faShoppingCart, 
+  faUser, 
+  faSignOutAlt, 
+  faBars, 
+  faXmark,
+  faChevronDown
+} from '@fortawesome/free-solid-svg-icons';
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -65,23 +74,11 @@ export default function Navbar() {
           <div className="flex items-center gap-4">
             {/* Cart */}
             <Link
-              href="/cart"
+              href="/checkout"
               className="relative p-2 text-muted hover:text-white transition-colors"
               aria-label="Shopping cart"
             >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.5}
-                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"
-                />
-              </svg>
+              <FontAwesomeIcon icon={faShoppingCart} className="w-5 h-5" />
               {itemCount > 0 && (
                 <motion.span
                   initial={{ scale: 0 }}
@@ -114,6 +111,7 @@ export default function Navbar() {
                         {session.user.name?.[0] || session.user.email?.[0] || 'U'}
                       </div>
                     )}
+                    <FontAwesomeIcon icon={faChevronDown} className={`w-3 h-3 text-muted transition-transform ${profileOpen ? 'rotate-180' : ''}`} />
                   </button>
                   <AnimatePresence>
                     {profileOpen && (
@@ -133,9 +131,10 @@ export default function Navbar() {
                         </div>
                         <Link
                           href="/account"
-                          className="block px-4 py-2 text-sm text-muted hover:text-white hover:bg-border/30 transition-colors"
+                          className="flex items-center gap-3 px-4 py-2.5 text-sm text-muted hover:text-white hover:bg-border/30 transition-colors"
                           onClick={() => setProfileOpen(false)}
                         >
+                          <FontAwesomeIcon icon={faUser} className="w-4 h-4" />
                           My Orders
                         </Link>
                         <button
@@ -143,8 +142,9 @@ export default function Navbar() {
                             setProfileOpen(false);
                             signOut();
                           }}
-                          className="block w-full text-left px-4 py-2 text-sm text-danger hover:bg-border/30 transition-colors"
+                          className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-danger hover:bg-border/30 transition-colors"
                         >
+                          <FontAwesomeIcon icon={faSignOutAlt} className="w-4 h-4" />
                           Sign Out
                         </button>
                       </motion.div>
@@ -167,23 +167,7 @@ export default function Navbar() {
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="Toggle menu"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                {mobileOpen ? (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                ) : (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                )}
-              </svg>
+              <FontAwesomeIcon icon={mobileOpen ? faXmark : faBars} className="w-6 h-6" />
             </button>
           </div>
         </div>
@@ -216,9 +200,10 @@ export default function Navbar() {
                   <>
                     <Link
                       href="/account"
-                      className="block text-sm text-muted py-2"
+                      className="flex items-center gap-3 text-sm text-muted py-2"
                       onClick={() => setMobileOpen(false)}
                     >
+                      <FontAwesomeIcon icon={faUser} className="w-4 h-4" />
                       My Orders
                     </Link>
                     <button
@@ -226,8 +211,9 @@ export default function Navbar() {
                         setMobileOpen(false);
                         signOut();
                       }}
-                      className="block text-sm text-danger py-2"
+                      className="flex items-center gap-3 text-sm text-danger py-2"
                     >
+                      <FontAwesomeIcon icon={faSignOutAlt} className="w-4 h-4" />
                       Sign Out
                     </button>
                   </>

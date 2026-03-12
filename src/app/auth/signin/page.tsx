@@ -4,6 +4,9 @@ import React, { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faGoogle, faMicrosoft, faApple } from '@fortawesome/free-brands-svg-icons';
 
 export default function SignInPage() {
   const router = useRouter();
@@ -38,7 +41,8 @@ export default function SignInPage() {
             disabled={loading !== null}
             className="w-full flex items-center justify-center gap-3 py-3.5 px-6 rounded-xl font-semibold text-sm bg-accent text-background hover:bg-accent/90 transition-all disabled:opacity-50"
           >
-            👤 {loading === 'guest' ? 'Loading...' : 'Continue as Guest'}
+            <FontAwesomeIcon icon={faUser} className="w-4 h-4" />
+            {loading === 'guest' ? 'Loading...' : 'Continue as Guest'}
           </button>
 
           <div className="relative">
@@ -56,7 +60,8 @@ export default function SignInPage() {
             disabled={loading !== null}
             className="w-full flex items-center justify-center gap-3 py-3.5 px-6 rounded-xl font-semibold text-sm bg-surface border border-border text-white hover:border-accent/50 transition-all disabled:opacity-50"
           >
-            🔵 {loading === 'google' ? 'Loading...' : 'Sign in with Google'}
+            <FontAwesomeIcon icon={faGoogle} className="w-4 h-4 text-[#DB4437]" />
+            {loading === 'google' ? 'Loading...' : 'Sign in with Google'}
           </button>
 
           {/* Microsoft */}
@@ -65,7 +70,8 @@ export default function SignInPage() {
             disabled={loading !== null}
             className="w-full flex items-center justify-center gap-3 py-3.5 px-6 rounded-xl font-semibold text-sm bg-surface border border-border text-white hover:border-accent/50 transition-all disabled:opacity-50"
           >
-            🪟 {loading === 'microsoft' ? 'Loading...' : 'Sign in with Microsoft'}
+            <FontAwesomeIcon icon={faMicrosoft} className="w-4 h-4 text-[#00A4EF]" />
+            {loading === 'microsoft' ? 'Loading...' : 'Sign in with Microsoft'}
           </button>
 
           {/* Apple */}
@@ -74,13 +80,15 @@ export default function SignInPage() {
             disabled={loading !== null}
             className="w-full flex items-center justify-center gap-3 py-3.5 px-6 rounded-xl font-semibold text-sm bg-surface border border-border text-white hover:border-accent/50 transition-all disabled:opacity-50"
           >
-            🍎 {loading === 'apple' ? 'Loading...' : 'Sign in with Apple'}
+            <FontAwesomeIcon icon={faApple} className="w-4 h-4" />
+            {loading === 'apple' ? 'Loading...' : 'Sign in with Apple'}
           </button>
         </div>
 
         <p className="text-center text-xs text-muted">
-          <button onClick={() => router.back()} className="hover:text-white transition-colors">
-            ← Go back
+          <button onClick={() => router.back()} className="hover:text-white transition-colors flex items-center justify-center gap-2 mx-auto">
+            <FontAwesomeIcon icon={faArrowLeft} className="w-3 h-3" />
+            Go back
           </button>
         </p>
         <p className="text-center text-xs text-muted">

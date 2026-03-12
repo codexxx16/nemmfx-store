@@ -8,7 +8,7 @@ export const products: Product[] = [
     description:
       'A professional MT5 Expert Advisor with multi-asset price action trading, 14+ candlestick patterns, HTF trend filter, session-aware execution, dynamic lot sizing, and trailing stop. Account-locked per license.',
     price_usd: 21.0,
-    image_url: '/products/mm-standard.png',
+    image_url: '/products/paid-bot.jpg',
     version: 'v1.2',
     tag: 'Best Seller',
     is_active: true,
@@ -36,7 +36,7 @@ export const products: Product[] = [
     description:
       'Everything in Standard + full visual indicator system: EMA ribbons, S/R zones drawn on chart, entry/SL/TP boxes, pattern labels, trend direction labels, trailing stop line, and RR ratio — all drawn live like a real trader. Customisable colors. Account-locked per license.',
     price_usd: 25.0,
-    image_url: '/products/mm-indicator.png',
+    image_url: '/products/paid-bot-premium.jpg',
     version: 'v1.2',
     tag: 'Premium',
     is_active: true,

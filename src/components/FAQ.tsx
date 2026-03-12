@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 interface FAQItem {
   question: string;
@@ -29,21 +31,12 @@ export default function FAQ({ items }: FAQProps) {
             <span className="text-sm font-medium text-white pr-4">
               {item.question}
             </span>
-            <motion.svg
-              animate={{ rotate: openIndex === index ? 180 : 0 }}
-              transition={{ duration: 0.2 }}
-              className="w-5 h-5 text-muted shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M19 9l-7 7-7-7"
-              />
-            </motion.svg>
+            <FontAwesomeIcon 
+              icon={faChevronDown} 
+              className={`w-4 h-4 text-muted shrink-0 transition-transform duration-200 ${
+                openIndex === index ? 'rotate-180' : ''
+              }`} 
+            />
           </button>
           <AnimatePresence>
             {openIndex === index && (

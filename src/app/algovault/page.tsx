@@ -4,6 +4,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import ProductCard from '@/components/ProductCard';
 import { products, freeProducts } from '@/lib/products';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBolt } from '@fortawesome/free-solid-svg-icons';
 
 export default function AlgoVaultPage() {
   return (
@@ -61,6 +63,7 @@ export default function AlgoVaultPage() {
             className="text-center mb-10"
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-success/10 border border-success/20 rounded-full mb-4">
+              <FontAwesomeIcon icon={faBolt} className="text-xs text-success" />
               <span className="text-xs font-bold text-success uppercase tracking-wider">
                 Free Tools — Limited Edition
               </span>

@@ -8,6 +8,8 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { Order } from '@/lib/types';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFileInvoice, faBoxOpen } from '@fortawesome/free-solid-svg-icons';
 
 const statusColors: Record<string, string> = {
   pending_payment: 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20',
@@ -113,19 +115,7 @@ export default function AccountPage() {
             <LoadingSpinner className="py-12" />
           ) : orders.length === 0 ? (
             <div className="text-center py-16 bg-surface border border-border rounded-xl">
-              <svg
-                className="w-12 h-12 mx-auto text-muted mb-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.5}
-                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-                />
-              </svg>
+              <FontAwesomeIcon icon={faBoxOpen} className="w-12 h-12 mx-auto text-muted mb-4" />
               <p className="text-muted mb-4">No orders yet</p>
               <Link
                 href="/algovault"
@@ -143,9 +133,12 @@ export default function AccountPage() {
                   className="block p-5 bg-surface border border-border rounded-xl hover:border-accent/30 transition-all group"
                 >
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-sm font-medium text-white group-hover:text-accent transition-colors">
-                      Order #{order.id.slice(0, 8)}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <FontAwesomeIcon icon={faFileInvoice} className="text-muted group-hover:text-accent transition-colors" />
+                      <span className="text-sm font-medium text-white group-hover:text-accent transition-colors">
+                        Order #{order.id.slice(0, 8)}
+                      </span>
+                    </div>
                     <span
                       className={`px-3 py-1 text-xs font-medium rounded-full border ${
                         statusColors[order.status] || statusColors.pending_payment

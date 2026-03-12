@@ -3,6 +3,14 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  faLocationDot, 
+  faEnvelope, 
+  faGlobe, 
+  faCommentDots 
+} from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 
 export default function Footer() {
   return (
@@ -64,11 +72,11 @@ export default function Footer() {
             </h3>
             <div className="space-y-2 text-sm text-muted">
               <p className="flex items-start gap-2">
-                <span className="shrink-0">📍</span>
+                <FontAwesomeIcon icon={faLocationDot} className="shrink-0 mt-1 text-accent" />
                 <span>Masvingo, Chivi District, Ngundu, Zimbabwe</span>
               </p>
               <p className="flex items-center gap-2">
-                <span className="shrink-0">📧</span>
+                <FontAwesomeIcon icon={faEnvelope} className="shrink-0 text-accent" />
                 <a
                   href="mailto:codexxxnull@gmail.com"
                   className="hover:text-accent transition-colors"
@@ -77,7 +85,7 @@ export default function Footer() {
                 </a>
               </p>
               <p className="flex items-center gap-2">
-                <span className="shrink-0">🌐</span>
+                <FontAwesomeIcon icon={faGlobe} className="shrink-0 text-accent" />
                 <a
                   href="https://charless-dev.vercel.app"
                   target="_blank"
@@ -88,7 +96,7 @@ export default function Footer() {
                 </a>
               </p>
               <p className="flex items-center gap-2">
-                <span className="shrink-0">💬</span>
+                <FontAwesomeIcon icon={faWhatsapp} className="shrink-0 text-[#25D366]" />
                 <a
                   href="https://wa.me/27747694008"
                   target="_blank"
