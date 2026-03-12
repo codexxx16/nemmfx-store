@@ -35,11 +35,16 @@ export const metadata: Metadata = {
     'Money Maker',
   ],
   authors: [{ name: 'CharlessDev', url: 'https://charless-dev.vercel.app' }],
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/logo.png',
+  },
   openGraph: {
     title: 'NemmFX — Professional Forex Trading Tools',
     description:
       'Your trusted source for professional forex trading tools and Expert Advisors.',
-    url: 'https://nemmfx.vercel.app',
+    url: 'https://nemmfx-store.vercel.app',
     siteName: 'NemmFX',
     locale: 'en_US',
     type: 'website',
