@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import FAQ from '@/components/FAQ';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import toast from 'react-hot-toast';
+import emailjs from '@emailjs/browser';
 import { 
   Mail, 
   Users, 
@@ -51,25 +52,41 @@ export default function SupportPage() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [sending, setSending] = useState(false);
 
+  useEffect(() => {
+    emailjs.init("5TVIEfKZGi2fd4I8x");
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSending(true);
 
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
+    const templateParams = {
+      from_name: formData.name,
+      from_email: formData.email,
+      message: formData.message,
+      to_name: 'NemmFX Support',
+    };
 
-      if (res.ok) {
+    try {
+      const result = await emailjs.send(
+        'service_gda80f7',
+        'template_1gifrlj',
+        templateParams
+      );
+
+      if (result.status === 200) {
         toast.success('Message sent! We will get back to you soon.');
         setFormData({ name: '', email: '', message: '' });
       } else {
-        toast.error('Failed to send message. Please try WhatsApp instead.');
+        throw new Error('EmailJS failed');
       }
-    } catch {
-      toast.error('Failed to send message. Please try WhatsApp instead.');
+    } catch (error) {
+      console.error('EmailJS Error:', error);
+      toast.error('Automated service unavailable. Redirecting to Gmail...');
+      
+      // Fallback to Gmail
+      const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=codexxxnull@gmail.com&su=Support Request from ${formData.name}&body=${encodeURIComponent(formData.message)}%0A%0AFrom: ${formData.email}`;
+      window.open(gmailUrl, '_blank');
     } finally {
       setSending(false);
     }

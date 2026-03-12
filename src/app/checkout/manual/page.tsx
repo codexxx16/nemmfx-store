@@ -67,9 +67,6 @@ function ManualPaymentContent() {
     setUploading(true);
 
     try {
-      // In a real app, we would upload the file to S3/Supabase here
-      // For now, we'll simulate the process and redirect to WhatsApp
-      
       const methodLabels: Record<string, string> = {
         eft: 'EFT (Access Bank)',
         mukuru: 'Mukuru',
@@ -83,7 +80,7 @@ function ManualPaymentContent() {
         `*Payment Method:* ${methodLabels[method] || method}\n` +
         `*Amount Paid:* $${total.toFixed(2)} USD\n` +
         `*Local Currency:* ${formatLocalPrice(total, currency)}\n\n` +
-        `I have uploaded my proof of payment. Please verify and send my .ex5 files.`;
+        `*Note:* I have attached my Proof of Payment (${selectedFile.name}) to this message. Please verify and send my .ex5 files.`;
 
       const whatsappUrl = `https://wa.me/27747694008?text=${encodeURIComponent(whatsappText)}`;
 
@@ -92,6 +89,8 @@ function ManualPaymentContent() {
         clearCart();
         toast.success('Proof of payment submitted! Redirecting to WhatsApp...');
         
+        // Note: Direct file attachment via URL is not supported by WhatsApp Web/App API.
+        // The user must manually attach the file in the chat window that opens.
         window.open(whatsappUrl, '_blank');
       }, 1500);
 
@@ -125,6 +124,9 @@ function ManualPaymentContent() {
           <h1 className="font-display text-2xl font-bold text-white uppercase tracking-widest">Payment Submitted!</h1>
           <p className="text-muted text-sm leading-relaxed">
             We&apos;ll verify your payment and send your .ex5 file to your WhatsApp within 2 hours.
+          </p>
+          <p className="text-xs text-accent font-bold uppercase tracking-widest animate-pulse">
+            Don't forget to attach your file in WhatsApp!
           </p>
           <div className="p-3 bg-background border border-border rounded-xl text-xs text-muted uppercase tracking-widest font-medium">
             Order ID: {orderId}
