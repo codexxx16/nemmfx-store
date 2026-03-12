@@ -10,16 +10,18 @@ import { Order } from '@/lib/types';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { 
   FileText, 
-  Package, 
   ChevronRight,
   ShieldCheck,
   ShoppingBag,
-  History
+  History,
+  CheckCircle2,
+  Clock
 } from 'lucide-react';
 
 const statusColors: Record<string, string> = {
   pending_payment: 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20',
-  pending_verification: 'bg-blue-500/10 text-blue-500 border-blue-500/20',
+  order_submitted: 'bg-blue-500/10 text-blue-500 border-blue-500/20',
+  order_completed: 'bg-success/10 text-success border-success/20',
   fulfilled: 'bg-success/10 text-success border-success/20',
   cancelled: 'bg-danger/10 text-danger border-danger/20',
   refunded: 'bg-muted/10 text-muted border-muted/20',
@@ -27,7 +29,8 @@ const statusColors: Record<string, string> = {
 
 const statusLabels: Record<string, string> = {
   pending_payment: 'Pending Payment',
-  pending_verification: 'Pending Verification',
+  order_submitted: 'Order Submitted',
+  order_completed: 'Order Completed',
   fulfilled: 'Fulfilled',
   cancelled: 'Cancelled',
   refunded: 'Refunded',
@@ -54,9 +57,55 @@ export default function AccountPage() {
   const fetchOrders = async () => {
     try {
       const res = await fetch('/api/orders');
+      let fetchedOrders: Order[] = [];
       if (res.ok) {
         const data = await res.json();
-        setOrders(data.orders || []);
+        fetchedOrders = data.orders || [];
+      }
+
+      // Sync with local storage for manual orders
+      const localOrdersStr = localStorage.getItem('nemmfx_local_orders');
+      if (localOrdersStr) {
+        const localOrders = JSON.parse(localOrdersStr);
+        const twoHours = 2 * 60 * 60 * 1000;
+        const now = Date.now();
+
+        const updatedLocalOrders = localOrders.map((order: any) => {
+          if (order.status === 'order_submitted' && now - order.created_at > twoHours) {
+            return { ...order, status: 'order_completed' };
+          }
+          return order;
+        });
+
+        // Update local storage if status changed
+        if (JSON.stringify(updatedLocalOrders) !== localOrdersStr) {
+          localStorage.setItem('nemmfx_local_orders', JSON.stringify(updatedLocalOrders));
+        }
+
+        // Merge with fetched orders, avoiding duplicates
+        const combinedOrders = [...fetchedOrders];
+        updatedLocalOrders.forEach((localOrder: any) => {
+          if (!combinedOrders.find(o => o.id === localOrder.id)) {
+            combinedOrders.push({
+              id: localOrder.id,
+              user_id: session?.user?.email || 'local',
+              status: localOrder.status,
+              total_usd: localOrder.total_usd,
+              subtotal_usd: localOrder.subtotal_usd,
+              vat_usd: localOrder.vat_usd,
+              payment_method: localOrder.payment_method,
+              created_at: new Date(localOrder.created_at).toISOString(),
+              updated_at: new Date(localOrder.created_at).toISOString(),
+              items: localOrder.items
+            } as any);
+          }
+        });
+
+        // Sort by date descending
+        combinedOrders.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+        setOrders(combinedOrders);
+      } else {
+        setOrders(fetchedOrders);
       }
     } catch {
       console.error('Failed to fetch orders');
@@ -144,9 +193,8 @@ export default function AccountPage() {
           ) : (
             <div className="grid grid-cols-1 gap-4">
               {orders.map((order) => (
-                <Link
+                <div
                   key={order.id}
-                  href={`/account/orders/${order.id}`}
                   className="block p-6 bg-surface border border-border rounded-2xl hover:border-accent/30 transition-all group"
                 >
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
@@ -161,13 +209,17 @@ export default function AccountPage() {
                         </p>
                       </div>
                     </div>
-                    <span
-                      className={`px-3 py-1 text-[10px] font-bold rounded-full border uppercase tracking-widest ${
-                        statusColors[order.status] || statusColors.pending_payment
-                      }`}
-                    >
-                      {statusLabels[order.status] || order.status}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span
+                        className={`px-3 py-1 text-[10px] font-bold rounded-full border uppercase tracking-widest flex items-center gap-1.5 ${
+                          statusColors[order.status] || statusColors.pending_payment
+                        }`}
+                      >
+                        {order.status === 'order_submitted' && <Clock className="w-3 h-3" />}
+                        {order.status === 'order_completed' && <CheckCircle2 className="w-3 h-3" />}
+                        {statusLabels[order.status] || order.status}
+                      </span>
+                    </div>
                   </div>
                   
                   <div className="flex items-center justify-between text-xs font-medium uppercase tracking-widest border-t border-border/50 pt-4">
@@ -189,12 +241,12 @@ export default function AccountPage() {
                         </span>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 text-accent group-hover:translate-x-1 transition-transform">
-                      Details
-                      <ChevronRight className="w-4 h-4" />
+                    <div className="flex flex-col items-end gap-1">
+                      <span className="text-[10px] text-muted uppercase tracking-widest font-bold">Method</span>
+                      <span className="text-white text-[10px] uppercase font-bold">{order.payment_method}</span>
                     </div>
                   </div>
-                </Link>
+                </div>
               ))}
             </div>
           )}

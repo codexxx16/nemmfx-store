@@ -179,11 +179,11 @@ export default function Home() {
             >
               <div className="aspect-square bg-surface border border-border rounded-3xl overflow-hidden flex items-center justify-center shadow-2xl shadow-accent/10">
                 <Image
-                  src="/logo.png"
-                  alt="NemmFX Logo"
-                  width={240}
-                  height={240}
-                  className="object-contain animate-float"
+                  src="/products/paid-bot-premium.jpg"
+                  alt="NemmFX Bot"
+                  width={400}
+                  height={400}
+                  className="object-cover animate-float"
                 />
               </div>
               {/* Abstract decoration */}

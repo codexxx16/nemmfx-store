@@ -25,7 +25,7 @@ import { WhatsappIcon } from 'hugeicons-react';
 function ManualPaymentContent() {
   const searchParams = useSearchParams();
   const method = searchParams.get('method') || 'eft';
-  const { items, total, clearCart } = useCart();
+  const { items, total, subtotal, vat, clearCart } = useCart();
   const { currency } = useCurrency();
   const [ecoCashRevealed, setEcoCashRevealed] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -84,13 +84,29 @@ function ManualPaymentContent() {
 
       const whatsappUrl = `https://wa.me/27747694008?text=${encodeURIComponent(whatsappText)}`;
 
+      // Save to local storage for status tracking
+      const localOrders = JSON.parse(localStorage.getItem('nemmfx_local_orders') || '[]');
+      localOrders.push({
+        id: orderId,
+        status: 'order_submitted',
+        total_usd: total,
+        subtotal_usd: subtotal,
+        vat_usd: vat,
+        payment_method: methodLabels[method] || method,
+        created_at: Date.now(),
+        items: items.map(i => ({
+          product_id: i.product.id,
+          product_name: i.product.name,
+          quantity: i.quantity,
+          unit_price: i.product.price_usd
+        }))
+      });
+      localStorage.setItem('nemmfx_local_orders', JSON.stringify(localOrders));
+
       setTimeout(() => {
         setUploaded(true);
         clearCart();
         toast.success('Proof of payment submitted! Redirecting to WhatsApp...');
-        
-        // Note: Direct file attachment via URL is not supported by WhatsApp Web/App API.
-        // The user must manually attach the file in the chat window that opens.
         window.open(whatsappUrl, '_blank');
       }, 1500);
 
