@@ -3,14 +3,13 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
-  faLocationDot, 
-  faEnvelope, 
-  faGlobe, 
-  faCommentDots 
-} from '@fortawesome/free-solid-svg-icons';
-import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+  MapPin, 
+  Mail, 
+  Globe, 
+  ArrowRight
+} from 'lucide-react';
+import { WhatsappIcon } from 'hugeicons-react';
 
 export default function Footer() {
   return (
@@ -19,7 +18,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Brand */}
           <div className="space-y-4">
-            <Link href="/" className="flex items-center gap-2">
+            <Link href="/" className="flex items-center gap-2 group">
               <div className="w-8 h-8 relative">
                 <Image
                   src="/logo.png"
@@ -29,12 +28,13 @@ export default function Footer() {
                   className="object-contain"
                 />
               </div>
-              <span className="font-display text-xl font-bold text-white">
+              <span className="font-display text-xl font-bold text-white group-hover:text-accent transition-colors">
                 NemmFX
               </span>
             </Link>
             <p className="text-muted text-sm leading-relaxed">
               Your trusted source for professional forex trading tools.
+              Built with precision and consistency in mind.
             </p>
           </div>
 
@@ -46,20 +46,23 @@ export default function Footer() {
             <div className="flex flex-col gap-2">
               <Link
                 href="/algovault"
-                className="text-sm text-muted hover:text-accent transition-colors"
+                className="text-sm text-muted hover:text-accent transition-colors flex items-center gap-2 group"
               >
+                <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                 AlgoVault
               </Link>
               <Link
                 href="/support"
-                className="text-sm text-muted hover:text-accent transition-colors"
+                className="text-sm text-muted hover:text-accent transition-colors flex items-center gap-2 group"
               >
+                <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                 Support
               </Link>
               <Link
                 href="/about"
-                className="text-sm text-muted hover:text-accent transition-colors"
+                className="text-sm text-muted hover:text-accent transition-colors flex items-center gap-2 group"
               >
+                <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                 About
               </Link>
             </div>
@@ -71,12 +74,12 @@ export default function Footer() {
               Contact
             </h3>
             <div className="space-y-2 text-sm text-muted">
-              <p className="flex items-start gap-2">
-                <FontAwesomeIcon icon={faLocationDot} className="shrink-0 mt-1 text-accent" />
+              <p className="flex items-start gap-2 group">
+                <MapPin className="w-4 h-4 shrink-0 mt-1 text-accent group-hover:scale-110 transition-transform" />
                 <span>Masvingo, Chivi District, Ngundu, Zimbabwe</span>
               </p>
-              <p className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faEnvelope} className="shrink-0 text-accent" />
+              <p className="flex items-center gap-2 group">
+                <Mail className="w-4 h-4 shrink-0 text-accent group-hover:scale-110 transition-transform" />
                 <a
                   href="mailto:codexxxnull@gmail.com"
                   className="hover:text-accent transition-colors"
@@ -84,8 +87,8 @@ export default function Footer() {
                   codexxxnull@gmail.com
                 </a>
               </p>
-              <p className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faGlobe} className="shrink-0 text-accent" />
+              <p className="flex items-center gap-2 group">
+                <Globe className="w-4 h-4 shrink-0 text-accent group-hover:scale-110 transition-transform" />
                 <a
                   href="https://charless-dev.vercel.app"
                   target="_blank"
@@ -95,8 +98,8 @@ export default function Footer() {
                   charless-dev.vercel.app
                 </a>
               </p>
-              <p className="flex items-center gap-2">
-                <FontAwesomeIcon icon={faWhatsapp} className="shrink-0 text-[#25D366]" />
+              <p className="flex items-center gap-2 group">
+                <WhatsappIcon className="w-4 h-4 shrink-0 text-[#25D366] group-hover:scale-110 transition-transform" />
                 <a
                   href="https://wa.me/27747694008"
                   target="_blank"
@@ -113,13 +116,13 @@ export default function Footer() {
         {/* Bottom */}
         <div className="mt-12 pt-8 border-t border-border text-center">
           <p className="text-sm text-muted">
-            &copy; 2026 NemmFX. All rights reserved.
+            &copy; {new Date().getFullYear()} NemmFX. All rights reserved.
           </p>
           <a
             href="https://nemm-co.vercel.app"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block mt-4 text-xs text-muted/50 hover:text-muted transition-colors"
+            className="inline-block mt-4 text-xs text-muted/50 hover:text-muted transition-colors uppercase tracking-widest"
           >
             From nemm
           </a>

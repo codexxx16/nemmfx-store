@@ -69,7 +69,7 @@ export const freeProducts: Product[] = [
     description:
       'A lightweight signal bot with basic trend detection and entry alerts. Perfect for beginners exploring algorithmic trading.',
     price_usd: 0,
-    image_url: '/products/mm-standard.png',
+    image_url: '/products/paid-bot.jpg',
     version: 'v1.0',
     tag: 'Free',
     is_active: true,
@@ -83,7 +83,7 @@ export const freeProducts: Product[] = [
     description:
       'Scans multiple pairs for trending conditions using moving average crossovers. Basic alerts and dashboard view included.',
     price_usd: 0,
-    image_url: '/products/mm-indicator.png',
+    image_url: '/products/paid-bot-premium.jpg',
     version: 'v1.0',
     tag: 'Free',
     is_active: true,

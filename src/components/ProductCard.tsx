@@ -8,8 +8,13 @@ import { Product } from '@/lib/types';
 import { useCart } from '@/contexts/CartContext';
 import { useCurrency } from '@/contexts/CurrencyContext';
 import { formatPrice } from '@/lib/currency';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDownload, faCartPlus } from '@fortawesome/free-solid-svg-icons';
+import { 
+  Download, 
+  ShoppingCart,
+  Zap,
+  ShieldCheck,
+  Star
+} from 'lucide-react';
 
 interface ProductCardProps {
   product: Product;
@@ -45,17 +50,16 @@ export default function ProductCard({ product }: ProductCardProps) {
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
           {product.tag && (
-            <span
-              className={`absolute top-3 left-3 px-3 py-1 text-xs font-bold rounded-full ${
-                product.tag === 'Free'
-                  ? 'bg-success/20 text-success'
-                  : product.tag === 'Premium'
-                    ? 'bg-accent/20 text-accent'
-                    : 'bg-accent/20 text-accent'
-              }`}
-            >
+            <div className="absolute top-3 left-3 flex items-center gap-1.5 px-3 py-1 text-[10px] font-bold rounded-full uppercase tracking-widest bg-black/50 backdrop-blur-md border border-white/10 text-white">
+              {product.tag === 'Free' ? (
+                <Download className="w-3 h-3 text-success" />
+              ) : product.tag === 'Premium' ? (
+                <Star className="w-3 h-3 text-accent fill-accent" />
+              ) : (
+                <Zap className="w-3 h-3 text-accent" />
+              )}
               {product.tag}
-            </span>
+            </div>
           )}
         </div>
       </Link>
@@ -72,15 +76,18 @@ export default function ProductCard({ product }: ProductCardProps) {
         {/* Price */}
         <div className="flex items-center justify-between pt-2">
           {product.is_free ? (
-            <span className="font-display text-lg font-bold text-success">
-              FREE
+            <span className="font-display text-lg font-bold text-success uppercase tracking-wider">
+              Free
             </span>
           ) : (
             <span className="text-sm font-medium text-white">
               {formatPrice(product.price_usd, currency)}
             </span>
           )}
-          <span className="text-xs text-muted">{product.version}</span>
+          <div className="flex items-center gap-1 text-[10px] text-muted uppercase tracking-widest">
+            <ShieldCheck className="w-3 h-3" />
+            {product.version}
+          </div>
         </div>
 
         {/* Action */}
@@ -88,21 +95,21 @@ export default function ProductCard({ product }: ProductCardProps) {
           <div>
             <button
               onClick={handleFreeClick}
-              className="w-full py-2.5 bg-success/10 text-success border border-success/20 rounded-lg font-medium text-sm hover:bg-success/20 transition-colors flex items-center justify-center gap-2"
+              className="w-full py-2.5 bg-success/10 text-success border border-success/20 rounded-lg font-bold text-xs uppercase tracking-widest hover:bg-success/20 transition-all flex items-center justify-center gap-2 group"
             >
-              <FontAwesomeIcon icon={faDownload} className="w-3 h-3" />
+              <Download className="w-3 h-3 group-hover:translate-y-0.5 transition-transform" />
               Get Free Bot
             </button>
-            <p className="text-xs text-muted text-center mt-2">
-              Limited features. Contact developer for details.
+            <p className="text-[10px] text-muted text-center mt-2 uppercase tracking-tighter">
+              Limited features • Contact support
             </p>
           </div>
         ) : (
           <button
             onClick={() => addToCart(product)}
-            className="w-full py-2.5 bg-accent text-background rounded-lg font-bold text-sm hover:bg-accent/90 transition-colors flex items-center justify-center gap-2"
+            className="w-full py-2.5 bg-accent text-background rounded-lg font-bold text-xs uppercase tracking-widest hover:bg-accent/90 transition-all flex items-center justify-center gap-2 group"
           >
-            <FontAwesomeIcon icon={faCartPlus} className="w-3 h-3" />
+            <ShoppingCart className="w-3 h-3 group-hover:scale-110 transition-transform" />
             Add to Cart
           </button>
         )}

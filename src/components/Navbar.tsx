@@ -7,15 +7,14 @@ import { useSession, signIn, signOut } from 'next-auth/react';
 import { useCart } from '@/contexts/CartContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
-  faShoppingCart, 
-  faUser, 
-  faSignOutAlt, 
-  faBars, 
-  faXmark,
-  faChevronDown
-} from '@fortawesome/free-solid-svg-icons';
+  ShoppingBag, 
+  User, 
+  LogOut, 
+  Menu, 
+  X,
+  ChevronDown
+} from 'lucide-react';
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -78,7 +77,7 @@ export default function Navbar() {
               className="relative p-2 text-muted hover:text-white transition-colors"
               aria-label="Shopping cart"
             >
-              <FontAwesomeIcon icon={faShoppingCart} className="w-5 h-5" />
+              <ShoppingBag className="w-5 h-5" />
               {itemCount > 0 && (
                 <motion.span
                   initial={{ scale: 0 }}
@@ -111,7 +110,7 @@ export default function Navbar() {
                         {session.user.name?.[0] || session.user.email?.[0] || 'U'}
                       </div>
                     )}
-                    <FontAwesomeIcon icon={faChevronDown} className={`w-3 h-3 text-muted transition-transform ${profileOpen ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`w-3 h-3 text-muted transition-transform ${profileOpen ? 'rotate-180' : ''}`} />
                   </button>
                   <AnimatePresence>
                     {profileOpen && (
@@ -134,7 +133,7 @@ export default function Navbar() {
                           className="flex items-center gap-3 px-4 py-2.5 text-sm text-muted hover:text-white hover:bg-border/30 transition-colors"
                           onClick={() => setProfileOpen(false)}
                         >
-                          <FontAwesomeIcon icon={faUser} className="w-4 h-4" />
+                          <User className="w-4 h-4" />
                           My Orders
                         </Link>
                         <button
@@ -144,7 +143,7 @@ export default function Navbar() {
                           }}
                           className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-danger hover:bg-border/30 transition-colors"
                         >
-                          <FontAwesomeIcon icon={faSignOutAlt} className="w-4 h-4" />
+                          <LogOut className="w-4 h-4" />
                           Sign Out
                         </button>
                       </motion.div>
@@ -167,7 +166,7 @@ export default function Navbar() {
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="Toggle menu"
             >
-              <FontAwesomeIcon icon={mobileOpen ? faXmark : faBars} className="w-6 h-6" />
+              {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
@@ -203,7 +202,7 @@ export default function Navbar() {
                       className="flex items-center gap-3 text-sm text-muted py-2"
                       onClick={() => setMobileOpen(false)}
                     >
-                      <FontAwesomeIcon icon={faUser} className="w-4 h-4" />
+                      <User className="w-4 h-4" />
                       My Orders
                     </Link>
                     <button
@@ -213,7 +212,7 @@ export default function Navbar() {
                       }}
                       className="flex items-center gap-3 text-sm text-danger py-2"
                     >
-                      <FontAwesomeIcon icon={faSignOutAlt} className="w-4 h-4" />
+                      <LogOut className="w-4 h-4" />
                       Sign Out
                     </button>
                   </>

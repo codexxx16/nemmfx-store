@@ -1,18 +1,23 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useCart } from '@/contexts/CartContext';
 import { useCurrency } from '@/contexts/CurrencyContext';
 import { formatLocalPrice } from '@/lib/currency';
-import ErrorBoundary from '@/components/ErrorBoundary';
 import LoadingSpinner from '@/components/LoadingSpinner';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faCheckCircle, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import { faPaypal, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import { 
+  ChevronLeft, 
+  CheckCircle2, 
+  AlertTriangle,
+  CreditCard,
+  MessageSquare,
+  ShieldCheck
+} from 'lucide-react';
+import { WhatsappIcon } from 'hugeicons-react';
 
-export default function PayPalCheckoutPage() {
+function PayPalCheckoutContent() {
   const { items, subtotal, vat, total } = useCart();
   const { currency } = useCurrency();
   const [status, setStatus] = useState<'idle' | 'processing' | 'success' | 'error'>('idle');
@@ -22,8 +27,8 @@ export default function PayPalCheckoutPage() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center space-y-4">
-          <h1 className="font-display text-2xl font-bold text-white">No Items to Pay For</h1>
-          <Link href="/algovault" className="inline-block px-6 py-2 bg-accent text-background rounded-lg font-bold text-sm">
+          <h1 className="font-display text-2xl font-bold text-white uppercase tracking-widest">No Items to Pay For</h1>
+          <Link href="/algovault" className="inline-block px-8 py-3 bg-accent text-background rounded-xl font-bold text-xs uppercase tracking-widest">
             Browse AlgoVault
           </Link>
         </div>
@@ -37,28 +42,28 @@ export default function PayPalCheckoutPage() {
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="max-w-md mx-auto text-center space-y-6 p-8"
+          className="max-w-md mx-auto text-center space-y-6 p-8 bg-surface border border-border rounded-2xl shadow-xl"
         >
           <div className="w-20 h-20 mx-auto bg-success/10 rounded-full flex items-center justify-center">
-            <FontAwesomeIcon icon={faCheckCircle} className="text-4xl text-success" />
+            <CheckCircle2 className="w-10 h-10 text-success" />
           </div>
-          <h1 className="font-display text-2xl font-bold text-white">Payment Confirmed!</h1>
-          <p className="text-muted leading-relaxed">
+          <h1 className="font-display text-2xl font-bold text-white uppercase tracking-widest">Payment Confirmed!</h1>
+          <p className="text-muted text-sm leading-relaxed">
             Our team will contact you within 1 hour on WhatsApp with your licensed .ex5 file.
             Please have your MT5 account number ready.
           </p>
-          <div className="flex flex-col gap-3">
-            <Link href="/account" className="px-6 py-2 bg-accent text-background rounded-lg font-bold text-sm">
+          <div className="flex flex-col gap-3 pt-4">
+            <Link href="/account" className="px-6 py-3 bg-accent text-background rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-accent/90 transition-all">
               View My Orders
             </Link>
             <a
               href="https://wa.me/27747694008"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-2 border border-success text-success rounded-lg font-medium text-sm hover:bg-success/10 transition-colors"
+              className="px-6 py-3 border border-success text-success rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-success/10 transition-all flex items-center justify-center gap-2"
             >
-              <FontAwesomeIcon icon={faWhatsapp} className="mr-2" />
-              Contact Us on WhatsApp
+              <WhatsappIcon className="w-4 h-4" />
+              Contact on WhatsApp
             </a>
           </div>
         </motion.div>
@@ -104,69 +109,88 @@ export default function PayPalCheckoutPage() {
   };
 
   return (
-    <ErrorBoundary>
-      <div className="min-h-screen py-12">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Link href="/checkout" className="inline-flex items-center gap-2 text-muted hover:text-white transition-colors mb-8">
-            <FontAwesomeIcon icon={faChevronLeft} className="w-3 h-3" />
-            Back to payment methods
-          </Link>
+    <div className="min-h-screen py-12">
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Link href="/checkout" className="inline-flex items-center gap-2 text-muted hover:text-white transition-colors mb-8 group">
+          <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+          Back to payment methods
+        </Link>
 
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <h1 className="font-display text-3xl font-bold text-white mb-8">PayPal Payment</h1>
-
-            {/* Order Summary */}
-            <div className="p-5 bg-surface border border-border rounded-xl mb-6 space-y-3">
-              <div className="flex justify-between text-sm">
-                <span className="text-muted">Subtotal</span>
-                <span className="text-white">${subtotal.toFixed(2)} USD</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-muted">VAT (15%)</span>
-                <span className="text-white">${vat.toFixed(2)} USD</span>
-              </div>
-              <div className="border-t border-border pt-3 flex justify-between">
-                <span className="font-display font-bold text-white">Total</span>
-                <div className="text-right">
-                  <p className="font-display text-xl font-bold text-accent">${total.toFixed(2)} USD</p>
-                  {currency.code !== 'USD' && (
-                    <p className="text-xs text-muted mt-1">~{formatLocalPrice(total, currency)}</p>
-                  )}
-                </div>
-              </div>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-surface border border-border rounded-2xl p-8 shadow-xl space-y-8">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 flex items-center justify-center bg-[#0070ba]/10 rounded-xl border border-[#0070ba]/20">
+              <CreditCard className="w-6 h-6 text-[#0070ba]" />
             </div>
+            <div>
+              <h1 className="font-display text-3xl font-bold text-white uppercase tracking-tight">PayPal Checkout</h1>
+              <p className="text-[10px] text-muted uppercase tracking-widest font-bold">Secure Payment Portal</p>
+            </div>
+          </div>
 
-            {/* PayPal Button */}
-            <div className="space-y-4">
-              {status === 'error' && (
-                <div className="p-4 bg-danger/10 border border-danger/20 rounded-lg text-sm text-danger flex items-center gap-3">
-                  <FontAwesomeIcon icon={faExclamationTriangle} />
-                  {errorMessage}
-                </div>
+          {/* Order Summary */}
+          <div className="p-6 bg-background/50 border border-border rounded-2xl space-y-4">
+            <div className="flex justify-between text-xs uppercase tracking-widest font-bold">
+              <span className="text-muted">Subtotal</span>
+              <span className="text-white">${subtotal.toFixed(2)} USD</span>
+            </div>
+            <div className="flex justify-between text-xs uppercase tracking-widest font-bold">
+              <span className="text-muted">VAT (15%)</span>
+              <span className="text-white">${vat.toFixed(2)} USD</span>
+            </div>
+            <div className="border-t border-border/50 pt-4 flex justify-between items-end">
+              <div className="space-y-1">
+                <span className="text-[10px] text-muted uppercase tracking-widest font-bold">Total Amount</span>
+                <p className="font-display text-3xl font-bold text-accent">${total.toFixed(2)} USD</p>
+              </div>
+              {currency.code !== 'USD' && (
+                <p className="text-xs text-muted font-bold mb-1">~{formatLocalPrice(total, currency)}</p>
               )}
-
-              <button
-                onClick={handlePayPalPayment}
-                disabled={status === 'processing'}
-                className="w-full py-4 bg-[#0070ba] hover:bg-[#005ea6] text-white font-bold rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
-              >
-                {status === 'processing' ? (
-                  <LoadingSpinner size="sm" />
-                ) : (
-                  <>
-                    <FontAwesomeIcon icon={faPaypal} className="text-xl" />
-                    Pay with PayPal — ${total.toFixed(2)} USD
-                  </>
-                )}
-              </button>
-
-              <p className="text-xs text-muted text-center">
-                Your payment will be securely processed and verified server-side before order confirmation.
-              </p>
             </div>
-          </motion.div>
-        </div>
+          </div>
+
+          {/* PayPal Button */}
+          <div className="space-y-6">
+            {status === 'error' && (
+              <div className="p-4 bg-danger/10 border border-danger/20 rounded-xl text-xs text-danger flex items-center gap-3 font-bold uppercase tracking-widest">
+                <AlertTriangle className="w-4 h-4" />
+                {errorMessage}
+              </div>
+            )}
+
+            <button
+              onClick={handlePayPalPayment}
+              disabled={status === 'processing'}
+              className="w-full py-4 bg-[#0070ba] hover:bg-[#005ea6] text-white font-bold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 shadow-lg shadow-[#0070ba]/20 uppercase text-xs tracking-widest"
+            >
+              {status === 'processing' ? (
+                <LoadingSpinner size="sm" />
+              ) : (
+                <>
+                  <CreditCard className="w-5 h-5" />
+                  Pay with PayPal — ${total.toFixed(2)} USD
+                </>
+              )}
+            </button>
+
+            <div className="flex items-center justify-center gap-2 text-[10px] text-muted uppercase tracking-widest font-bold">
+              <ShieldCheck className="w-3 h-3 text-success" />
+              Secure encrypted transaction
+            </div>
+          </div>
+        </motion.div>
       </div>
-    </ErrorBoundary>
+    </div>
+  );
+}
+
+export default function PayPalCheckoutPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <LoadingSpinner size="lg" />
+      </div>
+    }>
+      <PayPalCheckoutContent />
+    </Suspense>
   );
 }

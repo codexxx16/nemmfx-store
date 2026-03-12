@@ -8,8 +8,14 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { Order } from '@/lib/types';
 import LoadingSpinner from '@/components/LoadingSpinner';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFileInvoice, faBoxOpen } from '@fortawesome/free-solid-svg-icons';
+import { 
+  FileText, 
+  Package, 
+  ChevronRight,
+  ShieldCheck,
+  ShoppingBag,
+  History
+} from 'lucide-react';
 
 const statusColors: Record<string, string> = {
   pending_payment: 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20',
@@ -35,7 +41,7 @@ export default function AccountPage() {
 
   useEffect(() => {
     if (authStatus === 'unauthenticated') {
-      router.push('/api/auth/signin');
+      router.push('/auth/signin');
     }
   }, [authStatus, router]);
 
@@ -78,26 +84,32 @@ export default function AccountPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-4 mb-10"
+          className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12 bg-surface border border-border p-8 rounded-2xl shadow-xl"
         >
-          {session.user.image ? (
-            <Image
-              src={session.user.image}
-              alt={session.user.name || 'User'}
-              width={64}
-              height={64}
-              className="rounded-full"
-            />
-          ) : (
-            <div className="w-16 h-16 rounded-full bg-accent/20 flex items-center justify-center text-accent text-2xl font-bold">
-              {session.user.name?.[0] || session.user.email?.[0] || 'U'}
+          <div className="flex items-center gap-6">
+            {session.user.image ? (
+              <Image
+                src={session.user.image}
+                alt={session.user.name || 'User'}
+                width={80}
+                height={80}
+                className="rounded-2xl border-2 border-border"
+              />
+            ) : (
+              <div className="w-20 h-20 rounded-2xl bg-accent/20 border-2 border-accent/20 flex items-center justify-center text-accent text-3xl font-bold">
+                {session.user.name?.[0] || session.user.email?.[0] || 'U'}
+              </div>
+            )}
+            <div>
+              <h1 className="font-display text-3xl font-bold text-white tracking-tight">
+                {session.user.name || 'User'}
+              </h1>
+              <p className="text-sm text-muted uppercase tracking-widest font-medium mt-1">{session.user.email}</p>
             </div>
-          )}
-          <div>
-            <h1 className="font-display text-2xl font-bold text-white">
-              {session.user.name || 'User'}
-            </h1>
-            <p className="text-sm text-muted">{session.user.email}</p>
+          </div>
+          <div className="flex items-center gap-2 px-4 py-2 bg-background border border-border rounded-xl text-[10px] text-muted uppercase tracking-widest font-bold">
+            <ShieldCheck className="w-4 h-4 text-accent" />
+            Verified Account
           </div>
         </motion.div>
 
@@ -107,60 +119,80 @@ export default function AccountPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <h2 className="font-display text-xl font-bold text-white mb-6">
-            Order History
-          </h2>
+          <div className="flex items-center gap-3 mb-8">
+            <History className="w-6 h-6 text-accent" />
+            <h2 className="font-display text-2xl font-bold text-white uppercase tracking-widest">
+              Order History
+            </h2>
+          </div>
 
           {loading ? (
-            <LoadingSpinner className="py-12" />
+            <div className="py-20 flex justify-center">
+              <LoadingSpinner size="lg" />
+            </div>
           ) : orders.length === 0 ? (
-            <div className="text-center py-16 bg-surface border border-border rounded-xl">
-              <FontAwesomeIcon icon={faBoxOpen} className="w-12 h-12 mx-auto text-muted mb-4" />
-              <p className="text-muted mb-4">No orders yet</p>
+            <div className="text-center py-20 bg-surface border border-border rounded-2xl border-dashed">
+              <ShoppingBag className="w-12 h-12 mx-auto text-muted mb-4 opacity-20" />
+              <p className="text-muted text-sm uppercase tracking-widest font-medium mb-6">No orders found yet</p>
               <Link
                 href="/algovault"
-                className="inline-block px-6 py-2 bg-accent text-background rounded-lg font-bold text-sm"
+                className="inline-block px-8 py-3 bg-accent text-background rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-accent/90 transition-all"
               >
                 Browse AlgoVault
               </Link>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 gap-4">
               {orders.map((order) => (
                 <Link
                   key={order.id}
                   href={`/account/orders/${order.id}`}
-                  className="block p-5 bg-surface border border-border rounded-xl hover:border-accent/30 transition-all group"
+                  className="block p-6 bg-surface border border-border rounded-2xl hover:border-accent/30 transition-all group"
                 >
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-2">
-                      <FontAwesomeIcon icon={faFileInvoice} className="text-muted group-hover:text-accent transition-colors" />
-                      <span className="text-sm font-medium text-white group-hover:text-accent transition-colors">
-                        Order #{order.id.slice(0, 8)}
-                      </span>
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-background rounded-xl flex items-center justify-center text-muted group-hover:text-accent transition-colors border border-border">
+                        <FileText className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <p className="text-[10px] text-muted uppercase tracking-widest font-bold mb-0.5">Order Reference</p>
+                        <p className="text-sm font-bold text-white group-hover:text-accent transition-colors">
+                          #{order.id.slice(0, 12).toUpperCase()}
+                        </p>
+                      </div>
                     </div>
                     <span
-                      className={`px-3 py-1 text-xs font-medium rounded-full border ${
+                      className={`px-3 py-1 text-[10px] font-bold rounded-full border uppercase tracking-widest ${
                         statusColors[order.status] || statusColors.pending_payment
                       }`}
                     >
                       {statusLabels[order.status] || order.status}
                     </span>
                   </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted">
-                      {new Date(order.created_at).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                      })}
-                    </span>
-                    <span className="text-white font-medium">
-                      ${order.total_usd.toFixed(2)} USD
-                    </span>
-                  </div>
-                  <div className="mt-2 text-xs text-muted capitalize">
-                    Payment: {order.payment_method.replace('_', ' ')}
+                  
+                  <div className="flex items-center justify-between text-xs font-medium uppercase tracking-widest border-t border-border/50 pt-4">
+                    <div className="flex items-center gap-6">
+                      <div className="flex flex-col gap-1">
+                        <span className="text-muted">Date</span>
+                        <span className="text-white">
+                          {new Date(order.created_at).toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric',
+                          })}
+                        </span>
+                      </div>
+                      <div className="flex flex-col gap-1">
+                        <span className="text-muted">Amount</span>
+                        <span className="text-accent font-bold">
+                          ${order.total_usd.toFixed(2)} USD
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 text-accent group-hover:translate-x-1 transition-transform">
+                      Details
+                      <ChevronRight className="w-4 h-4" />
+                    </div>
                   </div>
                 </Link>
               ))}

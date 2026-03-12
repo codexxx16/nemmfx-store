@@ -5,9 +5,14 @@ import { motion } from 'framer-motion';
 import FAQ from '@/components/FAQ';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import toast from 'react-hot-toast';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faUsers, faEnvelopeOpenText } from '@fortawesome/free-solid-svg-icons';
-import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import { 
+  Mail, 
+  Users, 
+  Send,
+  HelpCircle,
+  MessageSquare
+} from 'lucide-react';
+import { WhatsappIcon } from 'hugeicons-react';
 
 const supportFAQ = [
   {
@@ -77,7 +82,7 @@ export default function SupportPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
             <h1 className="font-display text-4xl sm:text-5xl font-bold text-white">
-              Support
+              Support <span className="text-accent">Center</span>
             </h1>
             <p className="text-muted max-w-xl mx-auto">
               Need help? We are here to assist you with any questions about our
@@ -100,8 +105,8 @@ export default function SupportPage() {
               viewport={{ once: true }}
               className="p-6 bg-surface border border-border rounded-xl hover:border-success/30 transition-all text-center group"
             >
-              <div className="w-14 h-14 mx-auto bg-success/10 rounded-full flex items-center justify-center mb-4">
-                <FontAwesomeIcon icon={faWhatsapp} className="text-2xl text-success" />
+              <div className="w-14 h-14 mx-auto bg-success/10 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <WhatsappIcon className="w-7 h-7 text-success" />
               </div>
               <h3 className="font-display text-lg font-bold text-white group-hover:text-success transition-colors mb-2">
                 Chat on WhatsApp
@@ -121,8 +126,8 @@ export default function SupportPage() {
               transition={{ delay: 0.1 }}
               className="p-6 bg-surface border border-border rounded-xl hover:border-accent/30 transition-all text-center group"
             >
-              <div className="w-14 h-14 mx-auto bg-accent/10 rounded-full flex items-center justify-center mb-4">
-                <FontAwesomeIcon icon={faUsers} className="text-2xl text-accent" />
+              <div className="w-14 h-14 mx-auto bg-accent/10 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <Users className="w-7 h-7 text-accent" />
               </div>
               <h3 className="font-display text-lg font-bold text-white group-hover:text-accent transition-colors mb-2">
                 Join Our Community
@@ -140,8 +145,8 @@ export default function SupportPage() {
               transition={{ delay: 0.2 }}
               className="p-6 bg-surface border border-border rounded-xl hover:border-blue-500/30 transition-all text-center group"
             >
-              <div className="w-14 h-14 mx-auto bg-blue-500/10 rounded-full flex items-center justify-center mb-4">
-                <FontAwesomeIcon icon={faEnvelope} className="text-2xl text-blue-500" />
+              <div className="w-14 h-14 mx-auto bg-blue-500/10 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <Mail className="w-7 h-7 text-blue-500" />
               </div>
               <h3 className="font-display text-lg font-bold text-white group-hover:text-blue-500 transition-colors mb-2">
                 Email Us
@@ -157,9 +162,12 @@ export default function SupportPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="font-display text-2xl font-bold text-white mb-6">
-                Send us a Message
-              </h2>
+              <div className="flex items-center gap-3 mb-6">
+                <MessageSquare className="w-6 h-6 text-accent" />
+                <h2 className="font-display text-2xl font-bold text-white">
+                  Send us a Message
+                </h2>
+              </div>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-muted mb-1">
@@ -206,11 +214,11 @@ export default function SupportPage() {
                 <button
                   type="submit"
                   disabled={sending}
-                  className="w-full py-3 bg-accent text-background font-bold rounded-lg hover:bg-accent/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="w-full py-3 bg-accent text-background font-bold rounded-lg hover:bg-accent/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 group"
                 >
                   {sending ? <LoadingSpinner size="sm" /> : (
                     <>
-                      <FontAwesomeIcon icon={faEnvelopeOpenText} />
+                      <Send className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                       Send Message
                     </>
                   )}
@@ -224,9 +232,12 @@ export default function SupportPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="font-display text-2xl font-bold text-white mb-6">
-                Frequently Asked Questions
-              </h2>
+              <div className="flex items-center gap-3 mb-6">
+                <HelpCircle className="w-6 h-6 text-accent" />
+                <h2 className="font-display text-2xl font-bold text-white">
+                  Frequently Asked Questions
+                </h2>
+              </div>
               <FAQ items={supportFAQ} />
             </motion.div>
           </div>
