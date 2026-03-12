@@ -60,11 +60,11 @@ export default function AboutPage() {
             >
               <div className="aspect-square bg-surface border border-border rounded-2xl overflow-hidden flex items-center justify-center glow-accent">
                 <Image
-                  src="/logo.png"
-                  alt="NemmFX Logo"
-                  width={250}
-                  height={250}
-                  className="object-contain animate-float"
+                  src="/products/paid-bot-premium.jpg"
+                  alt="NemmFX Bot"
+                  width={400}
+                  height={400}
+                  className="object-cover animate-float"
                 />
               </div>
             </motion.div>
