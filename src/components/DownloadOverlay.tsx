@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { Download, Package, CheckCircle2, Zap } from 'lucide-react';
 
 interface Props {
   mediafireUrl: string;
@@ -33,11 +34,11 @@ export default function DownloadOverlay({ mediafireUrl, fileName, onClose }: Pro
     };
   }, [mediafireUrl, onClose]);
 
-  const phaseText = [
+  const phaseTexts = [
     'Preparing your download...',
-    'Downloading...',
+    'Validating file integrity...',
     'Redirecting to secure server...',
-  ][phase - 1];
+  ];
 
   const circumference = 2 * Math.PI * 35;
   const strokeDashoffset = circumference * (1 - progress / 100);
@@ -47,8 +48,10 @@ export default function DownloadOverlay({ mediafireUrl, fileName, onClose }: Pro
       <div className="download-modal glass-modal">
         <div className="download-logo">NemmFX</div>
         <div className="download-filename">{fileName}</div>
+        
+        {/* Modern Progress Ring with Icons */}
         <div className="download-progress-ring">
-          <svg viewBox="0 0 80 80">
+          <svg viewBox="0 0 80 80" className="w-24 h-24">
             <circle cx="40" cy="40" r="35" className="ring-bg" />
             <circle
               cx="40"
@@ -60,14 +63,23 @@ export default function DownloadOverlay({ mediafireUrl, fileName, onClose }: Pro
             />
           </svg>
           <div className="ring-icon">
-            {phase === 1 && '⬇'}
-            {phase === 2 && '📦'}
-            {phase === 3 && '✓'}
+            {phase === 1 && <Download className="w-8 h-8 text-accent animate-bounce" />}
+            {phase === 2 && <Package className="w-8 h-8 text-accent animate-spin" />}
+            {phase === 3 && <CheckCircle2 className="w-8 h-8 text-success" />}
           </div>
         </div>
-        <div className="download-phase-text">{phaseText}</div>
+
+        <div className="download-phase-text">{phaseTexts[phase - 1]}</div>
+        
+        {/* Modern Progress Bar */}
         <div className="download-progress-bar">
           <div className="download-progress-fill" style={{ width: `${progress}%` }} />
+        </div>
+
+        {/* Status Indicator */}
+        <div className="flex items-center justify-center gap-2 text-xs text-muted uppercase tracking-widest font-bold">
+          <Zap className="w-3 h-3 text-accent" />
+          Secure encrypted transfer
         </div>
       </div>
     </div>

@@ -59,43 +59,67 @@ export const products: Product[] = [
     detailed_description:
       'Money Maker v1.2 Indicator Edition is the premium version that includes everything in the Standard Edition plus a comprehensive visual indicator system. Watch the EA trade like a professional human trader with EMA ribbons showing trend direction, automatically drawn Support and Resistance zones, visual entry/SL/TP boxes for every trade, pattern labels identifying exactly which candlestick pattern triggered the trade, and a trailing stop line that moves in real-time. Every visual element is fully customizable with your preferred colors and styles. This edition is perfect for traders who want to learn from the EA while it trades.',
   },
+  {
+    id: '3',
+    slug: 'xauusd-scalper-pro',
+    name: 'XAUUSD Scalper v1.0 — Pro Edition',
+    description:
+      'High-frequency gold scalping engine engineered for 24/7 market participation. Implements a "Quick In, Grab Profits, Quick Out" strategy with sub-millisecond execution logic and adaptive volatility filters.',
+    price_usd: 29.0,
+    image_url: '/products/paid-bot.jpg',
+    version: 'v1.0',
+    tag: 'Pro',
+    is_active: true,
+    is_free: false,
+    created_at: '2026-04-17T00:00:00Z',
+    features: [
+      '24/7 automated gold scalping',
+      'High-frequency execution logic',
+      'Adaptive volatility filters',
+      'Dynamic profit-taking algorithms',
+      'Advanced risk management',
+      'Optimized for XAUUSD liquidity',
+    ],
+    detailed_description:
+      'The XAUUSD Scalper Pro Edition is a specialized algorithmic engine designed exclusively for the gold market. Unlike the free version, the Pro Edition operates 24/7 without trade limitations, utilizing a sophisticated scalping strategy that capitalizes on minor price fluctuations. It features advanced slippage protection and real-time spread monitoring to ensure optimal entry and exit points in the highly volatile gold environment.',
+  },
 ];
 
 export const freeProducts: Product[] = [
   {
     id: 'free-1',
-    slug: 'money-maker-lite',
-    name: 'Money Maker Lite — Basic Signal Bot (Free)',
+    slug: 'xauusd-scalper-lite',
+    name: 'XAUUSD Scalper v1.0 — Lite Edition (Free)',
     description:
-      'Lightweight algorithmic signal generator with trend-detection logic and real-time entry notifications. Ideal for traders exploring automated execution strategies.',
+      'Entry-level gold scalping bot with limited daily execution. Features a high-precision entry algorithm that resets at midnight. Ideal for evaluating the XAUUSD scalping strategy.',
     price_usd: 0,
     image_url: '/products/paid-bot.jpg',
     version: 'v1.0',
     tag: 'Free',
     is_active: true,
     is_free: true,
-    created_at: '2026-01-01T00:00:00Z',
-    mediafireUrl: 'https://www.mediafire.com/file/example1/money_maker_lite_v1.ex5/file',
+    created_at: '2026-04-17T00:00:00Z',
+    mediafireUrl: 'https://www.mediafire.com/file/jlfvongecmbxe6l/charless_xauusd_scalper_v1-1.ex5/file',
   },
   {
     id: 'free-2',
-    slug: 'nemmfx-trend-scanner',
-    name: 'NemmFX Trend Scanner — Free Edition',
+    slug: 'algolite-indicator',
+    name: 'AlgoLite v1.0 — EURUSD Indicator (Free)',
     description:
-      'Multi-pair trend analysis engine using advanced moving average crossover logic. Real-time market scanning with customizable alert thresholds and dashboard monitoring.',
+      'Specialized technical analysis indicator optimized exclusively for the EURUSD pair. Provides high-authority market structure insights and trend-exhaustion signals for manual strategy enhancement.',
     price_usd: 0,
     image_url: '/products/paid-bot-premium.jpg',
     version: 'v1.0',
     tag: 'Free',
     is_active: true,
     is_free: true,
-    created_at: '2026-01-01T00:00:00Z',
-    mediafireUrl: 'https://www.mediafire.com/file/example2/nemmfx_trend_scanner_v1.ex5/file',
+    created_at: '2026-04-17T00:00:00Z',
+    mediafireUrl: 'https://www.mediafire.com/file/ssxhfdfttkkh892/algolite_v1.ex5/file',
   },
 ];
 
 export function getProductBySlug(slug: string): Product | undefined {
-  return products.find((p) => p.slug === slug);
+  return [...products, ...freeProducts].find((p) => p.slug === slug);
 }
 
 export function getRelatedProducts(currentSlug: string): Product[] {
