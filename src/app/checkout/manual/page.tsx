@@ -286,8 +286,8 @@ function ManualPaymentContent() {
                   </div>
                   <div className="flex justify-between py-2 border-b border-border/50">
                     <span className="text-muted">WhatsApp Number</span>
-                    <button onClick={() => copyToClipboard('+27 74 769 4008')} className="text-white font-medium hover:text-accent transition-colors flex items-center gap-2">
-                      +27 74 769 4008
+                    <button onClick={() => copyToClipboard('+263 78 739 9652')} className="text-white font-medium hover:text-accent transition-colors flex items-center gap-2">
+                      +263 78 739 9652
                       <Copy className="w-3 h-3 text-muted" />
                     </button>
                   </div>
