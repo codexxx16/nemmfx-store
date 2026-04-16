@@ -82,7 +82,7 @@ function ManualPaymentContent() {
         `*Local Currency:* ${formatLocalPrice(total, currency)}\n\n` +
         `*Note:* I have attached my Proof of Payment (${selectedFile.name}) to this message. Please verify and send my .ex5 files.`;
 
-      const whatsappUrl = `https://wa.me/27747694008?text=${encodeURIComponent(whatsappText)}`;
+      const whatsappUrl = `https://wa.me/263787399652?text=${encodeURIComponent(whatsappText)}`;
 
       // Save to local storage for status tracking
       const localOrders = JSON.parse(localStorage.getItem('nemmfx_local_orders') || '[]');
@@ -151,7 +151,7 @@ function ManualPaymentContent() {
             <Link href="/account" className="px-6 py-3 bg-accent text-background rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-accent/90 transition-all">
               View My Orders
             </Link>
-            <a href="https://wa.me/27747694008" target="_blank" rel="noopener noreferrer" className="px-6 py-3 border border-success text-success rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-success/10 transition-all flex items-center justify-center gap-2">
+            <a href="https://wa.me/263787399652" target="_blank" rel="noopener noreferrer" className="px-6 py-3 border border-success text-success rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-success/10 transition-all flex items-center justify-center gap-2">
               <WhatsappIcon className="w-4 h-4" />
               Contact on WhatsApp
             </a>

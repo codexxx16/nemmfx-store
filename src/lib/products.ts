@@ -6,7 +6,7 @@ export const products: Product[] = [
     slug: 'money-maker-standard',
     name: 'Money Maker v1.2 — Standard Edition',
     description:
-      'A professional MT5 Expert Advisor with multi-asset price action trading, 14+ candlestick patterns, HTF trend filter, session-aware execution, dynamic lot sizing, and trailing stop. Account-locked per license.',
+      'A high-precision algorithmic execution engine optimized for volatile market conditions. Multi-asset price action analysis with 14+ candlestick pattern recognition, higher timeframe trend filtering, and session-aware execution logic.',
     price_usd: 21.0,
     image_url: '/products/paid-bot.jpg',
     version: 'v1.2',
@@ -34,7 +34,7 @@ export const products: Product[] = [
     slug: 'money-maker-indicator',
     name: 'Money Maker v1.2 — Indicator Edition (Premium)',
     description:
-      'Everything in Standard + full visual indicator system: EMA ribbons, S/R zones drawn on chart, entry/SL/TP boxes, pattern labels, trend direction labels, trailing stop line, and RR ratio — all drawn live like a real trader. Customisable colors. Account-locked per license.',
+      'Premium visual analytics platform with real-time chart markup: EMA ribbon analysis, auto-drawn support/resistance zones, entry/SL/TP visualization, and risk-to-reward metrics. Professional-grade visual feedback for strategy optimization.',
     price_usd: 25.0,
     image_url: '/products/paid-bot-premium.jpg',
     version: 'v1.2',
@@ -67,7 +67,7 @@ export const freeProducts: Product[] = [
     slug: 'money-maker-lite',
     name: 'Money Maker Lite — Basic Signal Bot (Free)',
     description:
-      'A lightweight signal bot with basic trend detection and entry alerts. Perfect for beginners exploring algorithmic trading.',
+      'Lightweight algorithmic signal generator with trend-detection logic and real-time entry notifications. Ideal for traders exploring automated execution strategies.',
     price_usd: 0,
     image_url: '/products/paid-bot.jpg',
     version: 'v1.0',
@@ -82,7 +82,7 @@ export const freeProducts: Product[] = [
     slug: 'nemmfx-trend-scanner',
     name: 'NemmFX Trend Scanner — Free Edition',
     description:
-      'Scans multiple pairs for trending conditions using moving average crossovers. Basic alerts and dashboard view included.',
+      'Multi-pair trend analysis engine using advanced moving average crossover logic. Real-time market scanning with customizable alert thresholds and dashboard monitoring.',
     price_usd: 0,
     image_url: '/products/paid-bot-premium.jpg',
     version: 'v1.0',

@@ -31,7 +31,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       setShowDownloadOverlay(true);
     } else {
       window.open(
-        'https://wa.me/27747694008?text=Hi%20CharlessDev%2C%20I%27m%20interested%20in%20the%20free%20bot',
+        'https://wa.me/263787399652?text=Hi%20CharlessDev%2C%20I%27m%20interested%20in%20the%20free%20bot',
         '_blank'
       );
     }

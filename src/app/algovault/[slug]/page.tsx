@@ -10,7 +10,9 @@ import { useCart } from '@/contexts/CartContext';
 import { useCurrency } from '@/contexts/CurrencyContext';
 import { formatPrice } from '@/lib/currency';
 import ProductCard from '@/components/ProductCard';
+import ProductSchema from '@/components/ProductSchema';
 import FAQ from '@/components/FAQ';
+import { ShoppingCart, Download, CheckCircle2 } from 'lucide-react';
 
 const productFAQ = [
   {
@@ -49,30 +51,23 @@ export default function ProductDetailPage() {
   const params = useParams();
   const slug = params.slug as string;
   const product = getProductBySlug(slug);
-  const relatedProducts = getRelatedProducts(slug);
-  const { addToCart } = useCart();
-  const { currency } = useCurrency();
 
   if (!product) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center space-y-4">
-          <h1 className="font-display text-2xl font-bold text-white">
-            Product Not Found
-          </h1>
-          <p className="text-muted">
-            The product you are looking for does not exist.
-          </p>
-          <Link
-            href="/algovault"
-            className="inline-block px-6 py-2 bg-accent text-background rounded-lg font-bold text-sm"
-          >
+          <h1 className="font-display text-2xl font-bold text-white">Product Not Found</h1>
+          <Link href="/algovault" className="inline-block px-6 py-2 bg-accent text-background rounded-lg font-bold text-sm">
             Back to AlgoVault
           </Link>
         </div>
       </div>
     );
   }
+
+  const relatedProducts = getRelatedProducts(slug);
+  const { addToCart } = useCart();
+  const { currency } = useCurrency();
 
   const handleBuyNow = () => {
     addToCart(product);
@@ -81,6 +76,8 @@ export default function ProductDetailPage() {
 
   return (
     <div className="min-h-screen">
+      <ProductSchema product={product} />
+
       {/* Breadcrumb */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <nav className="flex items-center gap-2 text-sm text-muted">
@@ -88,10 +85,7 @@ export default function ProductDetailPage() {
             Home
           </Link>
           <span>/</span>
-          <Link
-            href="/algovault"
-            className="hover:text-white transition-colors"
-          >
+          <Link href="/algovault" className="hover:text-white transition-colors">
             AlgoVault
           </Link>
           <span>/</span>
@@ -99,150 +93,117 @@ export default function ProductDetailPage() {
         </nav>
       </div>
 
-      {/* Product Header */}
-      <section className="py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Image */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="relative aspect-square bg-surface border border-border rounded-2xl overflow-hidden"
-            >
-              <Image
-                src={product.image_url}
-                alt={product.name}
-                fill
-                className="object-cover"
-                priority
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-              {product.tag && (
-                <span className="absolute top-4 left-4 px-4 py-1.5 bg-accent/20 text-accent text-sm font-bold rounded-full">
-                  {product.tag}
+      {/* Product Hero */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* Image */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="relative aspect-square bg-surface border border-border rounded-2xl overflow-hidden"
+          >
+            <Image
+              src={product.image_url}
+              alt={product.name}
+              fill
+              className="object-contain p-8"
+              sizes="(max-width: 768px) 100vw, 50vw"
+              priority
+            />
+          </motion.div>
+
+          {/* Details */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="space-y-6"
+          >
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-accent/10 border border-accent/20 rounded-full text-[10px] font-bold text-accent uppercase tracking-widest mb-4">
+                {product.tag}
+              </div>
+              <h1 className="font-display text-4xl font-bold text-white mb-2">
+                {product.name}
+              </h1>
+              <p className="text-muted text-sm">{product.version}</p>
+            </div>
+
+            <p className="text-white text-lg leading-relaxed">
+              {product.description}
+            </p>
+
+            {/* Price */}
+            <div className="p-6 bg-surface border border-border rounded-xl space-y-4">
+              <div className="flex items-end gap-2">
+                <span className="font-display text-4xl font-bold text-accent">
+                  ${product.price_usd.toFixed(2)}
                 </span>
-              )}
-            </motion.div>
-
-            {/* Details */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="space-y-6"
-            >
-              <div>
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="px-3 py-1 bg-surface border border-border rounded-full text-xs font-medium text-muted">
-                    {product.version}
-                  </span>
-                </div>
-                <h1 className="font-display text-3xl sm:text-4xl font-bold text-white">
-                  {product.name}
-                </h1>
+                <span className="text-muted text-sm uppercase tracking-widest font-bold">USD</span>
               </div>
-
-              <p className="text-muted leading-relaxed">
-                {product.detailed_description || product.description}
+              <p className="text-xs text-muted uppercase tracking-widest font-bold">
+                ✓ Lifetime license • ✓ Free updates (3 months) • ✓ Account-locked security
               </p>
+            </div>
 
-              <div className="space-y-1">
-                <p className="font-display text-3xl font-bold text-accent">
-                  {formatPrice(product.price_usd, currency)}
-                </p>
-                <p className="text-xs text-muted">
-                  Price excludes VAT. VAT added at checkout.
-                </p>
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button
-                  onClick={() => addToCart(product)}
-                  className="flex-1 py-3.5 bg-accent text-background font-bold rounded-lg hover:bg-accent/90 transition-colors text-sm"
-                >
-                  Add to Cart
-                </button>
-                <button
-                  onClick={handleBuyNow}
-                  className="flex-1 py-3.5 border border-accent text-accent font-bold rounded-lg hover:bg-accent/10 transition-colors text-sm"
-                >
-                  Buy Now
-                </button>
-              </div>
-
-              {/* What you'll receive */}
-              <div className="p-5 bg-surface border border-border rounded-xl space-y-3">
-                <h3 className="font-display text-sm font-semibold text-white uppercase tracking-wider">
-                  What You&apos;ll Receive
-                </h3>
-                <ul className="space-y-2">
-                  {[
-                    'Licensed .ex5 file bound to your MT5 account number',
-                    'Free updates for 3 months',
-                    'WhatsApp support from CharlessDev',
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-2 text-sm text-muted">
-                      <svg className="w-5 h-5 text-success shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </motion.div>
-          </div>
+            {/* CTA Buttons */}
+            <div className="space-y-3">
+              <button
+                onClick={handleBuyNow}
+                className="w-full py-4 bg-accent text-background font-bold rounded-xl hover:bg-accent/90 transition-all flex items-center justify-center gap-2 uppercase text-sm tracking-widest"
+              >
+                <ShoppingCart className="w-5 h-5" />
+                Add to Cart
+              </button>
+              <a
+                href="https://wa.me/263787399652?text=Hi%2C%20I%27m%20interested%20in%20the%20Money%20Maker%20EA"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-4 border border-accent text-accent rounded-xl hover:bg-accent/10 transition-all flex items-center justify-center gap-2 font-bold uppercase text-sm tracking-widest"
+              >
+                <Download className="w-5 h-5" />
+                Ask Questions on WhatsApp
+              </a>
+            </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Features */}
-      {product.features && (
-        <section className="py-16 bg-surface/50 border-t border-border">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="font-display text-2xl font-bold text-white mb-8">
-              Features
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {product.features.map((feature) => (
-                <motion.div
-                  key={feature}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  className="flex items-start gap-3 p-4 bg-surface border border-border rounded-lg"
-                >
-                  <svg className="w-5 h-5 text-accent shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span className="text-sm text-muted">{feature}</span>
-                </motion.div>
-              ))}
-            </div>
+      {product.features && product.features.length > 0 && (
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-border">
+          <h2 className="font-display text-3xl font-bold text-white mb-8">Features</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {product.features.map((feature, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.05 }}
+                className="flex items-start gap-3 p-4 bg-surface border border-border rounded-lg"
+              >
+                <CheckCircle2 className="w-5 h-5 text-success shrink-0 mt-0.5" />
+                <span className="text-white text-sm">{feature}</span>
+              </motion.div>
+            ))}
           </div>
         </section>
       )}
 
       {/* FAQ */}
-      <section className="py-16 border-t border-border">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="font-display text-2xl font-bold text-white mb-8">
-            Frequently Asked Questions
-          </h2>
-          <FAQ items={productFAQ} />
-        </div>
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-border">
+        <h2 className="font-display text-3xl font-bold text-white mb-8">Frequently Asked Questions</h2>
+        <FAQ items={productFAQ} />
       </section>
 
       {/* Related Products */}
       {relatedProducts.length > 0 && (
-        <section className="py-16 bg-surface/50 border-t border-border">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="font-display text-2xl font-bold text-white mb-8">
-              Related Products
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {relatedProducts.map((rp) => (
-                <ProductCard key={rp.id} product={rp} />
-              ))}
-            </div>
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-border">
+          <h2 className="font-display text-3xl font-bold text-white mb-8">Related Products</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {relatedProducts.map((relatedProduct) => (
+              <ProductCard key={relatedProduct.id} product={relatedProduct} />
+            ))}
           </div>
         </section>
       )}

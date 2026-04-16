@@ -101,7 +101,7 @@ export default function Footer() {
               <p className="flex items-center gap-2 group">
                 <WhatsappIcon className="w-4 h-4 shrink-0 text-[#25D366] group-hover:scale-110 transition-transform" />
                 <a
-                  href="https://wa.me/27747694008"
+                  href="https://wa.me/263787399652"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-accent transition-colors"

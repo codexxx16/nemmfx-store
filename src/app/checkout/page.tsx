@@ -60,7 +60,7 @@ const paymentMethods = [
     name: 'WhatsApp Payment',
     icon: <WhatsappIcon className="w-6 h-6 text-[#25D366]" />,
     description: 'Contact support',
-    href: 'https://wa.me/27747694008',
+    href: 'https://wa.me/263787399652',
     external: true,
   },
 ];

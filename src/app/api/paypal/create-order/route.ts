@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
         brand_name: 'NemmFX',
         landing_page: 'NO_PREFERENCE',
         user_action: 'PAY_NOW',
-        return_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/checkout/paypal?success=true`,
+        return_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/checkout/paypal?success=true&email=16ixtxxn@gmail.com`,
         cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/checkout/paypal?cancelled=true`,
       },
     };

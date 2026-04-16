@@ -57,7 +57,7 @@ function PayPalCheckoutContent() {
               View My Orders
             </Link>
             <a
-              href="https://wa.me/27747694008"
+              href="https://wa.me/263787399652"
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-3 border border-success text-success rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-success/10 transition-all flex items-center justify-center gap-2"

@@ -9,7 +9,7 @@ import { useCurrency } from '@/contexts/CurrencyContext';
 import { formatLocalPrice } from '@/lib/currency';
 
 export default function CartPage() {
-  const { items, removeFromCart, updateQuantity, subtotal, vat, total } =
+  const { items, removeFromCart, updateQuantity, clearCart, subtotal, vat, total } =
     useCart();
   const { currency } = useCurrency();
 
@@ -56,13 +56,23 @@ export default function CartPage() {
   return (
     <div className="min-h-screen py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="font-display text-3xl font-bold text-white mb-8"
-        >
-          Shopping Cart
-        </motion.h1>
+        <div className="flex items-center justify-between mb-8">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="font-display text-3xl font-bold text-white"
+          >
+            Shopping Cart
+          </motion.h1>
+          <motion.button
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            onClick={clearCart}
+            className="px-4 py-2 bg-danger/10 text-danger border border-danger/20 rounded-lg font-bold text-xs uppercase tracking-widest hover:bg-danger/20 transition-all"
+          >
+            Clear All
+          </motion.button>
+        </div>
 
         <div className="space-y-4">
           {items.map((item) => (
@@ -132,6 +142,7 @@ export default function CartPage() {
                 onClick={() => removeFromCart(item.product.id)}
                 className="p-2 text-muted hover:text-danger transition-colors shrink-0"
                 aria-label="Remove item"
+                title="Remove from cart"
               >
                 <svg
                   className="w-5 h-5"

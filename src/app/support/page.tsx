@@ -114,7 +114,7 @@ export default function SupportPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
             <motion.a
-              href="https://wa.me/27747694008"
+              href="https://wa.me/263787399652"
               target="_blank"
               rel="noopener noreferrer"
               initial={{ opacity: 0, y: 20 }}
