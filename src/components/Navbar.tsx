@@ -24,6 +24,7 @@ export default function Navbar() {
   const [profileOpen, setProfileOpen] = useState(false);
 
   const navLinks = [
+    { href: '/', label: 'Home' },
     { href: '/algovault', label: 'AlgoVault' },
     { href: '/support', label: 'Support' },
     { href: '/about', label: 'About' },
@@ -73,7 +74,7 @@ export default function Navbar() {
           <div className="flex items-center gap-4">
             {/* Cart */}
             <Link
-              href="/checkout"
+              href="/cart"
               className="relative p-2 text-muted hover:text-white transition-colors"
               aria-label="Shopping cart"
             >

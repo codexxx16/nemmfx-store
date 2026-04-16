@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const PAYPAL_API_BASE = process.env.NODE_ENV === 'production'
-  ? 'https://api-m.paypal.com'
-  : 'https://api-m.sandbox.paypal.com';
+// Always use sandbox for testing, change to production when ready
+const PAYPAL_API_BASE = 'https://api-m.sandbox.paypal.com';
 
 async function getPayPalAccessToken(): Promise<string> {
   const clientId = process.env.PAYPAL_CLIENT_ID;
@@ -66,6 +65,7 @@ export async function POST(request: NextRequest) {
             currency_code: 'USD',
             value: total_usd.toFixed(2),
           },
+
           description: 'NemmFX Trading Tools',
         },
       ],
