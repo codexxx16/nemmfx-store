@@ -32,7 +32,7 @@ export default function Navbar() {
   const isActive = (href: string) => pathname === href;
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-surface/95 backdrop-blur-md border-b border-border">
+    <nav className="fixed top-0 left-0 right-0 z-50 glass-navbar">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -118,7 +118,7 @@ export default function Navbar() {
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
-                        className="absolute right-0 mt-2 w-48 bg-surface border border-border rounded-lg shadow-xl overflow-hidden"
+                        className="absolute right-0 mt-2 w-48 glass-card overflow-hidden"
                       >
                         <div className="px-4 py-3 border-b border-border">
                           <p className="text-sm text-white font-medium truncate">
@@ -179,7 +179,7 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-surface border-b border-border overflow-hidden"
+            className="md:hidden glass-navbar overflow-hidden"
           >
             <div className="px-4 py-4 space-y-3">
               {navLinks.map((link) => (

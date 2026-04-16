@@ -13,7 +13,7 @@ import { WhatsappIcon } from 'hugeicons-react';
 
 export default function Footer() {
   return (
-    <footer className="bg-surface border-t border-border">
+    <footer className="glass-footer">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Brand */}
@@ -122,7 +122,7 @@ export default function Footer() {
             href="https://nemm-co.vercel.app"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block mt-4 text-xs text-muted/50 hover:text-muted transition-colors uppercase tracking-widest"
+            className="inline-block mt-4 text-xs text-muted/50 hover:text-muted transition-colors tracking-widest"
           >
             From nemm
           </a>

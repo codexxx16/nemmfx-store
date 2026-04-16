@@ -107,7 +107,7 @@ export default function SignInPage() {
             <ArrowLeft className="w-3 h-3 group-hover:-translate-x-1 transition-transform" />
             Go back
           </button>
-          <p className="text-[10px] text-muted uppercase tracking-widest">
+          <p className="text-[10px] text-muted tracking-widest">
             NemmFX — From{' '}
             <a href="https://nemm-co.vercel.app" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
               nemm

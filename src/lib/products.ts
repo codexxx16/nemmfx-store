@@ -75,6 +75,7 @@ export const freeProducts: Product[] = [
     is_active: true,
     is_free: true,
     created_at: '2026-01-01T00:00:00Z',
+    mediafireUrl: 'https://www.mediafire.com/file/example1/money_maker_lite_v1.ex5/file',
   },
   {
     id: 'free-2',
@@ -89,6 +90,7 @@ export const freeProducts: Product[] = [
     is_active: true,
     is_free: true,
     created_at: '2026-01-01T00:00:00Z',
+    mediafireUrl: 'https://www.mediafire.com/file/example2/nemmfx_trend_scanner_v1.ex5/file',
   },
 ];
 

@@ -11,6 +11,12 @@
   --text-muted: #666688;
   --success: #22c55e;
   --danger: #ef4444;
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-bg-hover: rgba(255, 255, 255, 0.13);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+  --glass-blur: blur(16px);
+  --glass-blur-heavy: blur(24px);
 }
 
 * {
@@ -24,7 +30,10 @@ html {
 }
 
 body {
-  background-color: var(--background);
+  background: radial-gradient(ellipse at 20% 50%, rgba(120,80,255,0.08) 0%, transparent 50%),
+              radial-gradient(ellipse at 80% 20%, rgba(0,200,150,0.06) 0%, transparent 50%),
+              #0a0a12;
+  background-attachment: fixed;
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -92,4 +101,214 @@ body {
 .blur-mask.revealed {
   filter: blur(0);
   user-select: auto;
+}
+
+/* Glassmorphism Components */
+
+.glass-navbar {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  background: var(--glass-bg-hover);
+  border-color: rgba(255, 255, 255, 0.28);
+  transform: translateY(-2px);
+}
+
+.glass-modal {
+  background: rgba(10, 10, 20, 0.7);
+  backdrop-filter: var(--glass-blur-heavy);
+}
+
+.glass-footer {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: var(--glass-blur);
+  border-top: 1px solid var(--glass-border);
+}
+
+/* Route Loader Styles */
+
+.route-loader-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(10, 10, 18, 0.92);
+  backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeInLoader 0.15s ease;
+}
+
+@keyframes fadeInLoader {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.route-loader-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.loader-logo {
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #00c896, #7b5ea7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 2px;
+}
+
+.loader-bar {
+  width: 200px;
+  height: 3px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.loader-bar-fill {
+  height: 100%;
+  width: 40%;
+  background: linear-gradient(90deg, #00c896, #7b5ea7);
+  border-radius: 2px;
+  animation: loaderSlide 0.8s ease infinite;
+}
+
+@keyframes loaderSlide {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(350%); }
+}
+
+/* Download Overlay Styles */
+
+.download-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  background: rgba(10, 10, 18, 0.92);
+  backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeInLoader 0.15s ease;
+}
+
+.download-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 48px 32px;
+  max-width: 340px;
+  width: 90%;
+  border-radius: 20px;
+}
+
+.download-logo {
+  font-size: 1.75rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #00c896, #7b5ea7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 2px;
+}
+
+.download-filename {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  line-height: 1.4;
+  max-width: 100%;
+  word-break: break-word;
+}
+
+.download-progress-ring {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.download-progress-ring svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.download-progress-ring .ring-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.1);
+  stroke-width: 2;
+}
+
+.download-progress-ring .ring-fill {
+  fill: none;
+  stroke: url(#ringGradient);
+  stroke-width: 2;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.1s linear;
+}
+
+.ring-icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+
+.download-phase-text {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  min-height: 1.5rem;
+}
+
+.download-progress-bar {
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.download-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00c896, #7b5ea7);
+  border-radius: 2px;
+  transition: width 0.1s linear;
+}
+
+@media (max-width: 640px) {
+  .download-modal {
+    padding: 32px 24px;
+    gap: 20px;
+  }
+
+  .download-logo {
+    font-size: 1.5rem;
+  }
+
+  .download-progress-ring {
+    width: 80px;
+    height: 80px;
+  }
+
+  .ring-icon {
+    font-size: 1.5rem;
+  }
 }

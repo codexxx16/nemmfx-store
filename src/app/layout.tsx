@@ -4,6 +4,7 @@ import './globals.css';
 import { Providers } from '@/providers/Providers';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import RouteLoader from '@/components/RouteLoader';
 
 const orbitron = Orbitron({
   subsets: ['latin'],
@@ -70,6 +71,7 @@ export default function RootLayout({
     <html lang="en" className={`${orbitron.variable} ${spaceGrotesk.variable}`}>
       <body className="font-body antialiased min-h-screen flex flex-col">
         <Providers>
+          <RouteLoader />
           <Navbar />
           <main className="flex-1 pt-16">{children}</main>
           <Footer />

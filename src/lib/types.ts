@@ -12,6 +12,7 @@ export interface Product {
   created_at: string;
   features?: string[];
   detailed_description?: string;
+  mediafireUrl?: string;
 }
 
 export interface CartItem {

@@ -6,6 +6,135 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 export default function AboutPage() {
+  const features = [
+    {
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      ),
+      title: 'Account-Locked EAs',
+      description: 'Each EA compiled to your MT5 account number only',
+    },
+    {
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      ),
+      title: 'Lifetime Updates',
+      description: 'All future versions included in your purchase',
+    },
+    {
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+      ),
+      title: 'Multi-Pair Trading',
+      description: 'One EA trades 10+ pairs simultaneously',
+    },
+    {
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        </svg>
+      ),
+      title: '3-Tier Exit System',
+      description: 'Closes at 1R, 2R, and 3R automatically',
+    },
+    {
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+        </svg>
+      ),
+      title: 'Smart Money Concepts',
+      description: 'Built-in ICT/SMC: Order Blocks, FVG, BOS/CHoCH',
+    },
+    {
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+      ),
+      title: 'Adaptive Risk Engine',
+      description: 'Lot size scales automatically with your balance',
+    },
+    {
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v2m0 4v2m0 4v2M6.343 3.665c.886-.887 2.318-.887 3.203 0l.707.707a1.129 1.129 0 001.602-1.602L9.172 1.06a2.129 2.129 0 00-3.015 3.015l.707.707zm9.314 9.314c.886.887.886 2.318 0 3.203l-.707.707a1.129 1.129 0 101.602 1.602l.707-.707a2.129 2.129 0 003.015-3.015l-.707-.707c.887-.886.887-2.318 0-3.203" />
+        </svg>
+      ),
+      title: 'Equity Protection',
+      description: 'Daily loss circuit breaker stops trading at 2% loss',
+    },
+    {
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m7.268-4.933a9.965 9.965 0 010 14.866m2.737-2.737a9.965 9.965 0 010-14.866M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+      ),
+      title: 'Broker-Aware Spreads',
+      description: 'Pre-configured for JustMarkets, Exness, IC Markets, XM & more',
+    },
+    {
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 3v1m6.364 1.636l-.707.707M21 12h-1m-1.636-6.364l-.707-.707M12 21v-1m-6.364-1.636l.707-.707M3 12h1m1.636 6.364l.707.707M7.05 6.586a1 1 0 10-1.414 1.414l1.414-1.414zm9.9 9.9a1 1 0 10-1.414 1.414l1.414-1.414z" />
+        </svg>
+      ),
+      title: 'Session Intelligence',
+      description: 'Only trades during high-probability market sessions',
+    },
+    {
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+        </svg>
+      ),
+      title: 'Push Notifications',
+      description: 'Real-time MT5 mobile alerts for every signal',
+    },
+    {
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        </svg>
+      ),
+      title: 'Live Dashboard',
+      description: 'On-chart panel shows positions, winrate, uptime live',
+    },
+    {
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      ),
+      title: '24/7 Synthetic Indices',
+      description: 'Cheat Code EA trades Deriv & Weltrade synthetics around the clock',
+    },
+    {
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4.458 4.458l.707.707M4.458 19.542l.707-.707M21 20h-1m-1.636-1.636l-.707.707M12 21v-1m-6.364-1.636l.707-.707" />
+        </svg>
+      ),
+      title: 'No VPS Required',
+      description: 'Runs on your PC or any Windows VPS',
+    },
+    {
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+        </svg>
+      ),
+      title: 'WhatsApp Support',
+      description: 'Direct developer access via WhatsApp',
+    },
+  ];
+
   return (
     <div className="min-h-screen">
       {/* Header */}
@@ -145,8 +274,39 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Values */}
+      {/* 2026 Store Features */}
       <section className="py-16 bg-surface/50 border-t border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="font-display text-3xl font-bold text-white text-center mb-12"
+          >
+            2026 Store Features
+          </motion.h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {features.map((feature) => (
+              <motion.div
+                key={feature.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="p-6 glass-card text-center space-y-3"
+              >
+                <div className="w-12 h-12 mx-auto bg-accent/10 rounded-full flex items-center justify-center text-accent">
+                  {feature.icon}
+                </div>
+                <h3 className="font-display text-sm font-bold text-white">{feature.title}</h3>
+                <p className="text-xs text-muted leading-relaxed">{feature.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Values */}
+      <section className="py-16 border-t border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -194,7 +354,7 @@ export default function AboutPage() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="p-6 bg-surface border border-border rounded-xl text-center space-y-4"
+                className="p-6 glass-card text-center space-y-4"
               >
                 <div className="w-14 h-14 mx-auto bg-accent/10 rounded-full flex items-center justify-center text-accent">
                   {value.icon}
